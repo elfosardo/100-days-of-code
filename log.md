@@ -15,3 +15,11 @@
 **Arguments**: Python 3.5, tweepy, configparser, ini configuration files
 
 **Link(s)**: [elf_auto_tweet](elf_auto_tweet)
+
+### Day 3: January 17, 2018
+
+**Today's Work**: playing with words! Simple script to show how to manipulate and work with sentences
+
+**Arguments**: Python 3.5, dictionaries, length, reverse, strings
+
+**Link(s)**: [playing_with_words](playing_with_words)
