@@ -1,3 +1,4 @@
 config.ini
 *.pyc
 __pycache__
+venv
