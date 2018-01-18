@@ -1,3 +1,4 @@
+import argparse
 import datetime
 
 HASHTAGS = '#100DaysOfCode #python'
@@ -6,10 +7,10 @@ TODAY = datetime.datetime.now()
 START_DATE = datetime.datetime(2018, 1, 14)
 
 
-def generate_tweet():
+def generate_tweet(tweet_phrase):
     days_passed = calc_days_passed()
-    tweet = "day ", days_passed
-    return tweet
+    tweet = 'day {}, {} {} {}'
+    return tweet.format(days_passed, tweet_phrase, HASHTAGS, MYREPO_URL)
 
 
 def calc_days_passed():
@@ -17,5 +18,10 @@ def calc_days_passed():
     return days_passed
 
 
-mytweet = generate_tweet()
-print(mytweet)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='100DaysOfCode Tweet generator')
+    parser.add_argument('tweet_phrase', metavar='P', type=str,
+                        help='one phrase to tweet them all, enclosed in quotation marks!')
+    args = parser.parse_args()
+    mytweet = generate_tweet(args.tweet_phrase)
+    print(mytweet)

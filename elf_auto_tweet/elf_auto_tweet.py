@@ -1,5 +1,3 @@
-import tweepy
-
 from config import api
 
 me = api.me()
