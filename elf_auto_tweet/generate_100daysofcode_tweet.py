@@ -7,7 +7,7 @@ TODAY = datetime.datetime.now()
 START_DATE = datetime.datetime(2018, 1, 14)
 
 
-def generate_tweet(tweet_phrase):
+def generate_challenge_tweet(tweet_phrase):
     days_passed = calc_days_passed()
     tweet = 'day {}, {} {} {}'
     return tweet.format(days_passed, tweet_phrase, HASHTAGS, MYREPO_URL)
@@ -23,5 +23,5 @@ if __name__ == '__main__':
     parser.add_argument('tweet_phrase', metavar='P', type=str,
                         help='one phrase to tweet them all, enclosed in quotation marks!')
     args = parser.parse_args()
-    mytweet = generate_tweet(args.tweet_phrase)
+    mytweet = generate_challenge_tweet(args.tweet_phrase)
     print(mytweet)

@@ -23,3 +23,20 @@
 **Arguments**: Python 3.5, dictionaries, length, reverse, strings
 
 **Link(s)**: [playing_with_words](playing_with_words)
+
+### Day 4: January 18, 2018
+
+**Today's Work**: made a script to generate the 100DaysOfCode tweet
+
+**Arguments**: Python 3.5, constants, functions, format, argparse, datetime
+
+**Link(s)**: [elf_auto_tweet](elf_auto_tweet)
+
+### Day 5: January 19, 2018
+
+**Today's Work**: tweeting from command line!
+
+**Arguments**: Python 3.5, logging, custom import, tweepy, argparse
+
+**Link(s)**: [elf_auto_tweet](elf_auto_tweet)
+
