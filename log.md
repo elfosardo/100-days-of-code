@@ -40,3 +40,10 @@
 
 **Link(s)**: [elf_auto_tweet](elf_auto_tweet)
 
+### Day 6: January 20, 2018
+
+**Today's Work**: started working on a scraper to get special offers from steam store
+
+**Arguments**: Python 3.5, urllib, BeautifulSoup
+
+**Link(s)**: [py_scraper](py_scraper)
