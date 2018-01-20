@@ -9,7 +9,7 @@ args = parser.parse_args()
 
 def ping_host(host):
     try:
-        output = subprocess.check_output(["ping", "-c", "2", host])
+        subprocess.check_output(["ping", "-c", "2", host])
     except:
         return False
 
