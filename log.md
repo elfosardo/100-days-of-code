@@ -47,3 +47,12 @@
 **Arguments**: Python 3.5, urllib, BeautifulSoup
 
 **Link(s)**: [py_scraper](py_scraper)
+
+### Day 7: January 21, 2018
+
+**Today's Work**: playing with clipboard;
+created script to add bullets to lines in clipboard or capitalize first letter of first word
+
+**Arguments**: Python 3.5, argparse mutually esclusive arguments, pyperclip, string and list manipulation
+
+**Link(s)**: [clipboard_fun](clipboard_fun)
