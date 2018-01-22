@@ -56,3 +56,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, argparse mutually esclusive arguments, pyperclip, string and list manipulation
 
 **Link(s)**: [clipboard_fun](clipboard_fun)
+
+### Day 8: January 22, 2018
+
+**Today's Work**: scraping steam site for 100 most played games; converted py_scraper to steam_scraper
+
+**Arguments**: Python 3.5, BeautifulSoup
+
+**Link(s)**: [steam_scraper](steam_scraper)
