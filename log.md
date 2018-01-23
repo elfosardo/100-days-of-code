@@ -64,3 +64,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, BeautifulSoup
 
 **Link(s)**: [steam_scraper](steam_scraper)
+
+### Day 9: January 23, 2018
+
+**Today's Work**: added columns and format to steam scraper; code needs improvement
+
+**Arguments**: Python 3.5, BeautifulSoup, format
+
+**Link(s)**: [steam_scraper](steam_scraper)

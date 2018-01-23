@@ -1,4 +1,3 @@
-
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
@@ -19,8 +18,12 @@ if __name__ == '__main__':
 
     page_html = get_the_page_html(PAGE_URL)
     page_soup = soupify_page_html(page_html)
-    top_games_played_column = page_soup('tr', attrs={'class':'player_count_row'})
+    top_games_played_column = page_soup('tr', attrs={'class': 'player_count_row'})
+    position = 0
 
     for line in top_games_played_column:
+        position += 1
         game_name = line.a.get_text()
-        print(game_name)
+        current_concurrency = line.find_all('span')[0].get_text()
+        peak_concurrency = line.find_all('span')[1].get_text()
+        print('{:>4} {:>10} {:>10} {}'.format(position, current_concurrency, peak_concurrency, game_name))
