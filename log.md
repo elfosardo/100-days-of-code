@@ -72,3 +72,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, BeautifulSoup, format
 
 **Link(s)**: [steam_scraper](steam_scraper)
+
+### Day 10: January 24, 2018
+
+**Today's Work**: started playing with PyGithub
+
+**Arguments**: Python 3.5, pygithub, argparse, format
+
+**Link(s)**: [github_tools](github_tools)
