@@ -15,4 +15,7 @@ if __name__ == '__main__':
 
     g = Github(user, password)
     for repo in g.get_user().get_repos():
-        print(repo.name)
+        name = repo.name
+        stars = repo.stargazers_count
+        watchers = repo.watchers_count
+        print('{:<25} {} {}'.format(name, stars, watchers))
