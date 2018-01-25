@@ -1,0 +1,32 @@
+<!doctype html>
+
+<head>
+    <title>Ordering List Tool</title>
+</head>
+
+<h1>Ordering List Tool</h1>
+
+<body>
+
+<div class="main">
+     <form method="POST" name="list_to_order" action="/">
+         List to order:<br>
+         <textarea name="list_to_order" rows="20" cols="30"></textarea><br>
+         <input type="submit" value="Submit">
+     </form>
+</div>
+
+<br>
+
+<div class="main">
+    {% if ordered_list %}
+    <p>
+        <h2>{% print("Your ordered list: ") %}</h2>
+        {% for entry in ordered_list %}
+        {{entry}}<br>
+        {% endfor %}
+    </p>
+    {% endif %}
+</div>
+
+</body>
