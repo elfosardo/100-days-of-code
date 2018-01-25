@@ -80,3 +80,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, pygithub, argparse, format
 
 **Link(s)**: [github_tools](github_tools)
+
+### Day 11: January 25, 2018
+
+**Today's Work**: using flask and jinja to generate an ordering list app
+
+**Arguments**: Python 3.5, flask, jinja, html, list sorting
+
+**Link(s)**: [flask_ordered_list](flask_ordered_list)
