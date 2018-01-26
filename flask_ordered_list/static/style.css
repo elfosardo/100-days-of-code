@@ -1,0 +1,17 @@
+body {
+        font-family: arial;
+        background: #eee;
+}
+
+h1, h2 {
+        color: navy;
+}
+
+h1 {
+    border-bottom: 1px solid;
+}
+
+h2 {
+    font-size: 1.2em;
+}
+

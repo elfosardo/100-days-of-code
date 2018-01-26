@@ -2,6 +2,7 @@
 
 <head>
     <title>Ordering List Tool</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <h1>Ordering List Tool</h1>
@@ -10,7 +11,7 @@
 
 <div class="main">
      <form method="POST" name="list_to_order" action="/">
-         List to order:<br>
+         <h2>List to order:</h2>
          <textarea name="list_to_order" rows="20" cols="30"></textarea><br>
          <input type="submit" value="Submit">
      </form>

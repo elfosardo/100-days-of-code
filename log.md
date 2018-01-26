@@ -88,3 +88,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, flask, jinja, html, list sorting
 
 **Link(s)**: [flask_ordered_list](flask_ordered_list)
+
+### Day 12: January 26, 2018
+
+**Today's Work**: adding some style! and some simple tests
+
+**Arguments**: Python 3.5, flask, jinja, html, css, unittest
+
+**Link(s)**: [flask_ordered_list](flask_ordered_list)
