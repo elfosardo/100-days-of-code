@@ -96,3 +96,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, flask, jinja, html, css, unittest
 
 **Link(s)**: [flask_ordered_list](flask_ordered_list)
+
+### Day 13: January 27, 2018
+
+**Today's Work**: playing with socket; created a simple file transfer server and client
+
+**Arguments**: Python 3.5, socket
+
+**Link(s)**: [socket_server](socket_server)
