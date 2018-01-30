@@ -16,13 +16,13 @@ if __name__ == '__main__':
     my_socket.bind((host, args.port))
     my_socket.listen(5)
 
-
     print('Server listening...')
 
     while True:
         (my_connection, addr) = my_socket.accept()
         print('Got connection from', addr)
         data = my_connection.recv(BUFFER)
+        print(data)
         print('Connection received')
         received_file_name = (data.decode()).splitlines()[0]
         print('Receiving file: ', received_file_name)

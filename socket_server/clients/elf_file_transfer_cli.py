@@ -4,6 +4,7 @@ import socket
 DEFAULT_PORT = 50000
 BUFFER = 1024
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='File Transfer Client')
     parser.add_argument('myfile', metavar='F',
@@ -17,7 +18,7 @@ if __name__ == '__main__':
 
     my_socket.connect((host, args.port))
 
-    filename  = args.myfile + '\n'
+    filename = args.myfile + '\n'
     my_socket.send(filename.encode())
 
     my_file_to_send = open(args.myfile, 'rb')
