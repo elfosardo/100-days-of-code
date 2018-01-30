@@ -120,3 +120,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, socket, argparse, file
 
 **Link(s)**: [socket_server](socket_server)
+
+### Day 16: January 30, 2018
+
+**Today's Work**: fixed truncated data with some good sleep
+
+**Arguments**: Python 3.5, socket, argparse, file, time
+
+**Link(s)**: [socket_server](socket_server)

@@ -1,5 +1,6 @@
 import argparse
 import socket
+import time
 
 DEFAULT_PORT = 50000
 BUFFER = 1024
@@ -20,6 +21,8 @@ if __name__ == '__main__':
 
     filename = args.myfile + '\n'
     my_socket.send(filename.encode())
+
+    time.sleep(1)
 
     my_file_to_send = open(args.myfile, 'rb')
     data_to_send = my_file_to_send.read(BUFFER)
