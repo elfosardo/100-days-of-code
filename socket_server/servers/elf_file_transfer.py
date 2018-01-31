@@ -5,16 +5,21 @@ DEFAULT_PORT = 50000
 BUFFER = 1024
 
 
+def open_socket():
+    my_socket = socket.socket()
+    host = socket.gethostname()
+    my_socket.bind((host, args.port))
+    my_socket.listen(5)
+    return my_socket
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='File Transfer Server')
     parser.add_argument('-p', '--port', dest='port', default=DEFAULT_PORT,
                         help='connection port; default 50000')
     args = parser.parse_args()
 
-    my_socket = socket.socket()
-    host = socket.gethostname()
-    my_socket.bind((host, args.port))
-    my_socket.listen(5)
+    my_socket = open_socket()
 
     print('Server listening...')
 
