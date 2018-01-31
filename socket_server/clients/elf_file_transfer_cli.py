@@ -6,6 +6,15 @@ DEFAULT_PORT = 50000
 BUFFER = 1024
 
 
+def send_file():
+    my_file_to_send = open(args.myfile, 'rb')
+    data_to_send = my_file_to_send.read(BUFFER)
+    while data_to_send:
+        my_socket.send(data_to_send)
+        data_to_send = my_file_to_send.read(BUFFER)
+    my_file_to_send.close()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='File Transfer Client')
     parser.add_argument('myfile', metavar='F',
@@ -15,7 +24,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     my_socket = socket.socket()
+
     host = socket.gethostname()
+
+    print('connecting')
 
     my_socket.connect((host, args.port))
 
@@ -24,12 +36,7 @@ if __name__ == '__main__':
 
     time.sleep(1)
 
-    my_file_to_send = open(args.myfile, 'rb')
-    data_to_send = my_file_to_send.read(BUFFER)
-    while data_to_send:
-        my_socket.send(data_to_send)
-        data_to_send = my_file_to_send.read(BUFFER)
-    my_file_to_send.close()
+    send_file()
 
     print('File successfully sent')
     my_socket.close()

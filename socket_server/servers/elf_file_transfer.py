@@ -19,12 +19,12 @@ if __name__ == '__main__':
                         help='connection port; default 50000')
     args = parser.parse_args()
 
-    my_socket = open_socket()
+    new_socket = open_socket()
 
     print('Server listening...')
 
     while True:
-        (my_connection, addr) = my_socket.accept()
+        (my_connection, addr) = new_socket.accept()
         print('Got connection from', addr)
         data = my_connection.recv(BUFFER)
         print(data)
