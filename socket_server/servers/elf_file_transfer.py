@@ -1,16 +1,31 @@
 import argparse
-import socket
+import socketserver
 
+HOST = 'localhost'
 DEFAULT_PORT = 50000
 BUFFER = 1024
 
 
-def open_socket():
-    my_socket = socket.socket()
-    host = socket.gethostname()
-    my_socket.bind((host, args.port))
-    my_socket.listen(5)
-    return my_socket
+class MyFileServer(socketserver.BaseRequestHandler):
+
+    def handle(self):
+        self.data = self.request.recv(BUFFER)
+        print(self.data)
+        print('Connection received')
+        received_file_name = (self.data.decode()).splitlines()[0]
+        print('Receiving file: ', received_file_name)
+        with open(received_file_name, 'wb') as received_file:
+            print('Upload started')
+            while True:
+                print('Receiving data...')
+                self.data = self.request.recv(BUFFER)
+                if not self.data:
+                    break
+                received_file.write(self.data)
+        received_file.close()
+        print('Done receiving')
+        self.request.sendall('Data received'.encode())
+        self.request.close()
 
 
 if __name__ == '__main__':
@@ -19,28 +34,8 @@ if __name__ == '__main__':
                         help='connection port; default 50000')
     args = parser.parse_args()
 
-    new_socket = open_socket()
+    server = socketserver.TCPServer((HOST, args.port), MyFileServer)
 
     print('Server listening...')
 
-    while True:
-        (my_connection, addr) = new_socket.accept()
-        print('Got connection from', addr)
-        data = my_connection.recv(BUFFER)
-        print(data)
-        print('Connection received')
-        received_file_name = (data.decode()).splitlines()[0]
-        print('Receiving file: ', received_file_name)
-        with open(received_file_name, 'wb') as received_file:
-            print('Upload started')
-            while True:
-                print('Receiving data...')
-                data = my_connection.recv(BUFFER)
-                if not data:
-                    break
-                received_file.write(data)
-        received_file.close()
-
-        print('Done receiving')
-        my_connection.send('Data received'.encode())
-        my_connection.close()
+    server.serve_forever()

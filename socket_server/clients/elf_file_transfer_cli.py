@@ -2,6 +2,7 @@ import argparse
 import socket
 import time
 
+DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = 50000
 BUFFER = 1024
 
@@ -19,13 +20,15 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='File Transfer Client')
     parser.add_argument('myfile', metavar='F',
                         help='file to transfer')
+    parser.add_argument('--host', dest='hostname', default=DEFAULT_HOST,
+                        help='server hostname or ip; default to localhost')
     parser.add_argument('-p', '--port', dest='port', default=DEFAULT_PORT,
                         help='connection port; default 50000')
     args = parser.parse_args()
 
     my_socket = socket.socket()
 
-    host = socket.gethostname()
+    host = args.hostname
 
     print('connecting')
 
