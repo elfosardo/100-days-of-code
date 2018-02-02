@@ -145,3 +145,10 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [socket_server](socket_server)
 
+### Day 19: February 02, 2018
+
+**Today's Work**: adding logging and threading to file server
+
+**Arguments**: Python 3.5, socketserver, logging, threading
+
+**Link(s)**: [socket_server](socket_server)

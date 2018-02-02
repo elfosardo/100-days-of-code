@@ -1,31 +1,41 @@
 import argparse
+import logging
 import socketserver
+import threading
 
 HOST = 'localhost'
 DEFAULT_PORT = 50000
 BUFFER = 1024
 
 
-class MyFileServer(socketserver.BaseRequestHandler):
+class MyFileServerHandler(socketserver.BaseRequestHandler):
+
+    def __init__(self, request, client_address, server):
+        self.logger = logging.getLogger('MyFileServerHandler')
+        self.logger.debug('__init__')
+        socketserver.BaseRequestHandler.__init__(self, request,
+                                                 client_address,
+                                                 server)
+        return
 
     def handle(self):
         self.data = self.request.recv(BUFFER)
-        print(self.data)
-        print('Connection received')
+        self.logger.debug('Connection received')
         received_file_name = (self.data.decode()).splitlines()[0]
-        print('Receiving file: ', received_file_name)
+        self.logger.debug('Receiving file: %s', received_file_name)
         with open(received_file_name, 'wb') as received_file:
-            print('Upload started')
+            self.logger.debug('Upload started')
             while True:
-                print('Receiving data...')
+                self.logger.debug('Receiving data...')
                 self.data = self.request.recv(BUFFER)
                 if not self.data:
                     break
                 received_file.write(self.data)
         received_file.close()
-        print('Done receiving')
+        self.logger.debug('Done receiving')
         self.request.sendall('Data received'.encode())
         self.request.close()
+        return
 
 
 if __name__ == '__main__':
@@ -34,8 +44,14 @@ if __name__ == '__main__':
                         help='connection port; default 50000')
     args = parser.parse_args()
 
-    server = socketserver.TCPServer((HOST, args.port), MyFileServer)
+    logging.basicConfig(
+        level=logging.DEBUG,
+        datefmt='%y-%m-%d %H:%M:%S',
+        format='%(asctime)s (%(threadName)-10s) %(name)s: %(message)s',
+    )
 
-    print('Server listening...')
-
-    server.serve_forever()
+    server_address = (HOST, args.port)
+    server = socketserver.TCPServer(server_address, MyFileServerHandler)
+    logging.debug('Server listening...')
+    new_thread = threading.Thread(target=server.serve_forever(), daemon=True)
+    new_thread.start()
