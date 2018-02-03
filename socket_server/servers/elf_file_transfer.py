@@ -3,6 +3,7 @@ import logging
 import socketserver
 import threading
 
+
 HOST = 'localhost'
 DEFAULT_PORT = 50000
 BUFFER = 1024
@@ -31,11 +32,31 @@ class MyFileServerHandler(socketserver.BaseRequestHandler):
                 if not self.data:
                     break
                 received_file.write(self.data)
+        self.logger.debug('Closing File')
         received_file.close()
         self.logger.debug('Done receiving')
-        self.request.sendall('Data received'.encode())
         self.request.close()
         return
+
+
+class MyFileServer(socketserver.TCPServer):
+
+    def __init__(self, server_address, handler_class=MyFileServerHandler):
+        self.logger = logging.getLogger('MyFileServer')
+        self.logger.debug('__init__')
+        self.logger.debug('Server listening...')
+        socketserver.TCPServer.__init__(self, server_address, handler_class)
+        return
+
+    def serve_forever(self):
+        self.logger.debug('Waiting connection requests')
+        self.logger.info('Handling requests, press <Ctrl-C> to quit')
+        socketserver.TCPServer.serve_forever(self)
+        return
+
+    def handle_request(self):
+        self.logger.debug('handle_request')
+        return socketserver.TCPServer.handle_request(self)
 
 
 if __name__ == '__main__':
@@ -50,8 +71,7 @@ if __name__ == '__main__':
         format='%(asctime)s (%(threadName)-10s) %(name)s: %(message)s',
     )
 
-    server_address = (HOST, args.port)
-    server = socketserver.TCPServer(server_address, MyFileServerHandler)
-    logging.debug('Server listening...')
+    my_address = (HOST, args.port)
+    server = MyFileServer(my_address, MyFileServerHandler)
     new_thread = threading.Thread(target=server.serve_forever(), daemon=True)
     new_thread.start()
