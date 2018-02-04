@@ -160,3 +160,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, socketserver, class methods override
 
 **Link(s)**: [socket_server](socket_server)
+
+### Day 21: February 04, 2018
+
+**Today's Work**: started words counter module
+
+**Arguments**: Python 3.5, file, words, strings
+
+**Link(s)**: [words_counter](words_counter)
