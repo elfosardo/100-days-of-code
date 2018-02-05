@@ -168,3 +168,12 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, file, words, strings
 
 **Link(s)**: [words_counter](words_counter)
+
+### Day 22: February 05, 2018
+
+**Today's Work**: added function to count most frequent words in file using fileinput and collections
+
+**Arguments**: Python 3.5, fileinput, collections
+
+**Link(s)**: [words_counter](words_counter)
+
