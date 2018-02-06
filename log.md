@@ -177,3 +177,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [words_counter](words_counter)
 
+### Day 23: February 06, 2018
+
+**Today's Work**: started working on a runkeeper scraper... or more
+
+**Arguments**: Python 3.5, BeautifulSoup, requests, dicts, parsing
+
+**Link(s)**: [runkeeper_scraper](runkeeper_scraper)
+
