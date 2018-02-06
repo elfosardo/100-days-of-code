@@ -1,8 +1,7 @@
 import argparse
 import getpass
 import requests
-from bs4 import BeautifulSoup
-from urllib.request import urlopen
+from bs4 import BeautifulSoup as bs
 
 LOGIN_URL = 'https://runkeeper.com/login'
 
@@ -28,7 +27,7 @@ if __name__ == '__main__':
     with requests.Session() as session:
 
         login_page = session.get(LOGIN_URL)
-        my_soup = BeautifulSoup(login_page.text, 'html.parser')
+        my_soup = bs(login_page.text, 'html.parser')
         login_form = my_soup.find_all('input', {'type': 'hidden'})
         hidden_payload = {}
         for element in login_form:
@@ -42,7 +41,7 @@ if __name__ == '__main__':
         r = session.get(request_url)
         #print(r.text)
         html_code = r.text
-        my_soup = BeautifulSoup(html_code, 'html.parser')
+        my_soup = bs(html_code, 'html.parser')
         #print(my_soup.prettify())
         total_activities = my_soup.find('div', {'id': 'totalActivities'}).find('h1')
         print(total_activities.text)
