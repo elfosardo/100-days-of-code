@@ -1,9 +1,24 @@
 import argparse
 import getpass
 import requests
-from bs4 import BeautifulSoup as bs
+import re
+from bs4 import BeautifulSoup as BS
 
+
+SITE_URL = 'https://runkeeper.com'
 LOGIN_URL = 'https://runkeeper.com/login'
+
+
+def get_profile_name():
+    my_home = '{}/home'.format(SITE_URL)
+    print(my_home)
+    real_home = session.get(my_home)
+    soup = BS(real_home.text, 'html.parser')
+    profile_link = soup.find('a', {'href': re.compile(r"/user/[a-zA-Z0-9]*/profile")})
+#    profile_urlo = profile_link.text
+#    profile_name =
+    return profile_link
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get info from runkeeper site')
@@ -27,7 +42,7 @@ if __name__ == '__main__':
     with requests.Session() as session:
 
         login_page = session.get(LOGIN_URL)
-        my_soup = bs(login_page.text, 'html.parser')
+        my_soup = BS(login_page.text, 'html.parser')
         login_form = my_soup.find_all('input', {'type': 'hidden'})
         hidden_payload = {}
         for element in login_form:
@@ -41,7 +56,12 @@ if __name__ == '__main__':
         r = session.get(request_url)
         #print(r.text)
         html_code = r.text
-        my_soup = bs(html_code, 'html.parser')
+        my_soup = BS(html_code, 'html.parser')
         #print(my_soup.prettify())
         total_activities = my_soup.find('div', {'id': 'totalActivities'}).find('h1')
         print(total_activities.text)
+
+        profile_url = get_profile_name()
+        print(profile_url)
+
+
