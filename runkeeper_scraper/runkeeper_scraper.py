@@ -6,12 +6,37 @@ from bs4 import BeautifulSoup as BfS
 
 
 SITE_URL = 'https://runkeeper.com'
-LOGIN_URL = 'https://runkeeper.com/login'
+
+
+class Error(Exception):
+    pass
+
+
+class AuthenticationFailed(Error):
+    def __init__(self, message):
+        self.message = message
+
+
+def authenticate():
+    login_url = '{}/login'.format(SITE_URL)
+    login_page = session.get(login_url)
+    my_soup = BfS(login_page.text, 'html.parser')
+    login_form = my_soup.find_all('input', {'type': 'hidden'})
+    hidden_payload = {}
+    for element in login_form:
+        hidden_payload[element.attrs['name']] = element.attrs['value']
+    hidden_payload['email'] = args.email
+    hidden_payload['password'] = my_password
+    post = session.post(login_url, data=hidden_payload)
+    cookie = post.cookies.get('checker')
+    if not cookie:
+        raise AuthenticationFailed('Cookie not generated. Wrong Password?')
+    return True
 
 
 def get_profile_name():
-    my_home = '{}/home'.format(SITE_URL)
-    real_home = session.get(my_home)
+    home_url = '{}/home'.format(SITE_URL)
+    real_home = session.get(home_url)
     soup = BfS(real_home.text, 'html.parser')
     profile_href = soup.find('a', {'href': re.compile(r"/user/[a-zA-Z0-9]*/profile")})
     profile_path = profile_href.attrs['href']
@@ -20,7 +45,7 @@ def get_profile_name():
 
 
 def get_total_activities():
-    request_url = "{}/user/{}/profile".format(SITE_URL, my_profile_name)
+    request_url = '{}/user/{}/profile'.format(SITE_URL, my_profile_name)
     request = session.get(request_url)
     html_code = request.text
     soup = BfS(html_code, 'html.parser')
@@ -37,20 +62,7 @@ if __name__ == '__main__':
     my_password = getpass.getpass()
 
     with requests.Session() as session:
-
-        login_page = session.get(LOGIN_URL)
-        my_soup = BfS(login_page.text, 'html.parser')
-        login_form = my_soup.find_all('input', {'type': 'hidden'})
-        hidden_payload = {}
-        for element in login_form:
-            hidden_payload[element.attrs['name']] = element.attrs['value']
-        hidden_payload['email'] = args.email
-        hidden_payload['password'] = my_password
-        post = session.post(LOGIN_URL, data=hidden_payload)
-        cookie = post.cookies.get('checker')
-
+        authenticate()
         my_profile_name = get_profile_name()
-
         total_activities = get_total_activities()
-
         print(total_activities.text)
