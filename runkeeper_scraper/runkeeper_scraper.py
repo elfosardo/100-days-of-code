@@ -18,60 +18,67 @@ class AuthenticationFailed(Error):
         self.message = message
 
 
-def authenticate():
-    login_url = '{}/login'.format(SITE_URL)
-    hidden_payload = get_hidden_payload(login_url)
-    post = session.post(login_url, data=hidden_payload)
-    cookie = post.cookies.get('checker')
-    if not cookie:
-        raise AuthenticationFailed('Cookie not generated. Wrong Password?')
-    return True
+class RunkeeperUser:
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+        self.is_authenticated = False
+        self.profile_name = self.get_profile_name()
+        self.total_distance = self.get_total_distance()
+        self.total_activities = self.get_total_activities()
+        self.total_calories = self.get_total_calories()
 
+    def authenticate(self):
+        login_url = '{}/login'.format(SITE_URL)
+        hidden_payload = self.get_hidden_payload(login_url)
+        post = session.post(login_url, data=hidden_payload)
+        cookie = post.cookies.get('checker')
+        if not cookie:
+            raise AuthenticationFailed('Cookie not generated. Wrong Password?')
+        return True
 
-def get_hidden_payload(login_url):
-    login_page = session.get(login_url)
-    my_soup = BfS(login_page.text, 'html.parser')
-    login_form = my_soup.find_all('input', {'type': 'hidden'})
-    hidden_payload = {}
-    for element in login_form:
-        hidden_payload[element.attrs['name']] = element.attrs['value']
-    hidden_payload['email'] = args.email
-    hidden_payload['password'] = my_password
-    return hidden_payload
+    @staticmethod
+    def get_hidden_payload(login_url):
+        login_page = session.get(login_url)
+        my_soup = BfS(login_page.text, 'html.parser')
+        login_form = my_soup.find_all('input', {'type': 'hidden'})
+        hidden_payload = {}
+        for element in login_form:
+            hidden_payload[element.attrs['name']] = element.attrs['value']
+        hidden_payload['email'] = args.email
+        hidden_payload['password'] = my_password
+        return hidden_payload
 
+    def get_profile_name(self):
+        if not self.is_authenticated:
+            self.authenticate()
+        home_url = '{}/home'.format(SITE_URL)
+        real_home = session.get(home_url)
+        soup = BfS(real_home.text, 'html.parser')
+        profile_href = soup.find('a', {'href': re.compile(PROFILE_REGEX)})
+        profile_path = profile_href.attrs['href']
+        profile_name = profile_path.split('/')[2]
+        return profile_name
 
-def get_profile_name():
-    home_url = '{}/home'.format(SITE_URL)
-    real_home = session.get(home_url)
-    soup = BfS(real_home.text, 'html.parser')
-    profile_href = soup.find('a', {'href': re.compile(PROFILE_REGEX)})
-    profile_path = profile_href.attrs['href']
-    profile_name = profile_path.split('/')[2]
-    return profile_name
+    def get_profile_info(self, info):
+        request_url = '{}/user/{}/profile'.format(SITE_URL, self.profile_name)
+        request = session.get(request_url)
+        html_code = request.text
+        soup = BfS(html_code, 'html.parser')
+        profile_info = soup.find('div', {'id': info}).find('h1').text
+        return profile_info
 
+    def get_total_distance(self):
+        distance = self.get_profile_info('totalDistance')
+        return distance
 
-def get_profile_soup():
-    my_profile_name = get_profile_name()
-    request_url = '{}/user/{}/profile'.format(SITE_URL, my_profile_name)
-    request = session.get(request_url)
-    html_code = request.text
-    soup = BfS(html_code, 'html.parser')
-    return soup
+    def get_total_activities(self):
+        activities = self.get_profile_info('totalActivities')
+        return activities
 
-
-def get_total_kms():
-    kms = my_profile_soup.find('div', {'id': 'totalDistance'}).find('h1')
-    return kms
-
-
-def get_total_activities():
-    activities = my_profile_soup.find('div', {'id': 'totalActivities'}).find('h1')
-    return activities
-
-
-def get_total_calories():
-    calories = my_profile_soup.find('div', {'id': 'totalCalories'}).find('h1')
-    return calories
+    def get_total_calories(self):
+        calories = self.get_profile_info('totalCalories')
+        return calories
 
 
 if __name__ == '__main__':
@@ -83,12 +90,9 @@ if __name__ == '__main__':
     my_password = getpass.getpass()
 
     with requests.Session() as session:
-        authenticate()
-        my_profile_soup = get_profile_soup()
-        total_kms = get_total_kms().text
-        total_activities = get_total_activities().text
-        total_calories = get_total_calories().text
+        my_user = RunkeeperUser(args.email, my_password)
 
-        print('Total km: {}'.format(total_kms))
-        print('Total Activities: {}'.format(total_activities))
-        print('Total Calories: {}'.format(total_calories))
+        print('User Profile: {}'.format(my_user.profile_name))
+        print('Total Distance: {}'.format(my_user.total_distance))
+        print('Total Activities: {}'.format(my_user.total_activities))
+        print('Total Calories: {}'.format(my_user.total_calories))
