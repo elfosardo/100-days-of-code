@@ -208,3 +208,12 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 **Arguments**: Python 3.5, functions, BeautifulSoup
 
 **Link(s)**: [runkeeper_scraper](runkeeper_scraper)
+
+### Day 27: February 10, 2018
+
+**Today's Work**: added RunkeeperUser class
+
+**Arguments**: Python 3.5, classes, methods, staticmethods
+
+**Link(s)**: [runkeeper_scraper](runkeeper_scraper)
+
