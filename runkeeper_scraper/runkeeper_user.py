@@ -72,7 +72,7 @@ class RunkeeperUser:
     def get_activities_by_month_year(self, month, year):
         start_date = "{}-01-{}".format(month, year)
         payload = {"userName": self.profile_name, "startDate": start_date}
-        url = "{site}/activitiesByDateRange".format(site=SITE_URL)
+        url = "{}/activitiesByDateRange".format(SITE_URL)
         request = self.session.get(url, params=payload)
         activities_in_month = json.loads(request.text)['activities']
         return activities_in_month
