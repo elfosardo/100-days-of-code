@@ -11,7 +11,12 @@ def get_activites_by_month_year(date):
     year = date.split('/')[1]
     my_activities = my_user.get_activities_by_month_year(month, year)
     for my_activity in my_activities[year][month]:
-        print(my_activity)
+        print('Activity id: {}'.format(my_activity['activity_id']))
+        print('Activity Date: {} {} {}'.format(my_activity['dayOfMonth'],
+                                               my_activity['month'],
+                                               my_activity['year']))
+        print('Distance: {} {}'.format(my_activity['distance'],
+                                       my_activity['distanceUnits']))
 
 
 if __name__ == '__main__':
