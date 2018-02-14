@@ -241,3 +241,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [runkeeper_scraper](runkeeper_scraper)
 
+### Day 31: February 14, 2018
+
+**Today's Work**: created a script to translate words to morse code
+
+**Arguments**: Python 3.5, dicts, strings, regex
+
+**Link(s)**: [morse_translator](morse_translator)
+
