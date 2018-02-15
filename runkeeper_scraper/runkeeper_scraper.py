@@ -3,6 +3,7 @@ import getpass
 import requests
 
 from runkeeper_user import RunkeeperUser
+from runkeeper_activity import RunkeeperActivity
 
 
 def get_activites_by_month_year(date):
@@ -10,13 +11,12 @@ def get_activites_by_month_year(date):
     month = date.split('/')[0]
     year = date.split('/')[1]
     my_activities = my_user.get_activities_by_month_year(month, year)
+    total_activites_list = []
     for my_activity in my_activities[year][month]:
-        print('Activity id: {}'.format(my_activity['activity_id']))
-        print('Activity Date: {} {} {}'.format(my_activity['dayOfMonth'],
-                                               my_activity['month'],
-                                               my_activity['year']))
-        print('Distance: {} {}'.format(my_activity['distance'],
-                                       my_activity['distanceUnits']))
+        new_activity = RunkeeperActivity(my_activity)
+        total_activites_list.append(new_activity)
+    total_activites = len(total_activites_list)
+    print('Total activities {}'.format(total_activites))
 
 
 if __name__ == '__main__':
