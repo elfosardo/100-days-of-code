@@ -249,3 +249,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [morse_translator](morse_translator)
 
+### Day 32: February 15, 2018
+
+**Today's Work**: moving activity to its own class
+
+**Arguments**: Python 3.5, classes, custom import
+
+**Link(s)**: [runkeeper_scraper](runkeeper_scraper)
+
