@@ -1,5 +1,6 @@
 import config
 from bs4 import BeautifulSoup as BfS
+from datetime import datetime
 
 
 class RunkeeperActivity:
@@ -31,6 +32,11 @@ class RunkeeperActivity:
         soup = BfS(activity_session.text, 'html.parser')
         datetime_form = soup.find('div', {'class': 'micro-text activitySubTitle'})
         for date_info in datetime_form:
-            activity_datetime = date_info.split('-')[0]
-
+            activity_datetime_split = date_info.split('-')[0].rstrip()
+            activity_datetime_string = ''.join(activity_datetime_split)
+            activity_datetime = datetime.strptime(activity_datetime_string, '%a %b %d %H:%M:%S %Z %Y')
         return activity_datetime
+
+    def get_converted_datetime(self):
+        converted_datetime = datetime.strftime(self.get_activity_datetime(), '%Y-%m-%d_%H%M%S')
+        return converted_datetime
