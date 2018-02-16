@@ -1,10 +1,8 @@
+import config
 import json
 import re
 import runkeeper_errors as rke
 from bs4 import BeautifulSoup as BfS
-
-SITE_URL = 'https://runkeeper.com'
-PROFILE_REGEX = r"/user/[a-zA-Z0-9]*/profile"
 
 
 class RunkeeperUser:
@@ -19,7 +17,7 @@ class RunkeeperUser:
         self.total_calories = self.get_total_calories()
 
     def authenticate(self):
-        login_url = '{}/login'.format(SITE_URL)
+        login_url = '{}/login'.format(config.SITE_URL)
         hidden_payload = self.get_hidden_payload(login_url)
         post = self.session.post(login_url, data=hidden_payload)
         cookie = post.cookies.get('checker')
@@ -41,16 +39,16 @@ class RunkeeperUser:
     def get_profile_name(self):
         if not self.is_authenticated:
             self.authenticate()
-        home_url = '{}/home'.format(SITE_URL)
+        home_url = '{}/home'.format(config.SITE_URL)
         real_home = self.session.get(home_url)
         soup = BfS(real_home.text, 'html.parser')
-        profile_href = soup.find('a', {'href': re.compile(PROFILE_REGEX)})
+        profile_href = soup.find('a', {'href': re.compile(config.PROFILE_REGEX)})
         profile_path = profile_href.attrs['href']
         profile_name = profile_path.split('/')[2]
         return profile_name
 
     def get_profile_info(self, info):
-        request_url = '{}/user/{}/profile'.format(SITE_URL, self.profile_name)
+        request_url = '{}/user/{}/profile'.format(config.SITE_URL, self.profile_name)
         request = self.session.get(request_url)
         html_code = request.text
         soup = BfS(html_code, 'html.parser')
@@ -72,7 +70,7 @@ class RunkeeperUser:
     def get_activities_by_month_year(self, month, year):
         start_date = "{}-01-{}".format(month, year)
         payload = {"userName": self.profile_name, "startDate": start_date}
-        url = "{}/activitiesByDateRange".format(SITE_URL)
+        url = "{}/activitiesByDateRange".format(config.SITE_URL)
         request = self.session.get(url, params=payload)
         activities_in_month = json.loads(request.text)['activities']
         return activities_in_month

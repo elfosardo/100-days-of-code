@@ -13,10 +13,12 @@ def get_activites_by_month_year(date):
     my_activities = my_user.get_activities_by_month_year(month, year)
     total_activites_list = []
     for my_activity in my_activities[year][month]:
-        new_activity = RunkeeperActivity(my_activity)
+        new_activity = RunkeeperActivity(my_user, my_activity)
         total_activites_list.append(new_activity)
+        saved_activity = new_activity.get_activity_datetime()
+        print(saved_activity)
     total_activites = len(total_activites_list)
-    print('Total activities {}'.format(total_activites))
+    print('Total downloaded activities {}'.format(total_activites))
 
 
 if __name__ == '__main__':
