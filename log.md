@@ -265,3 +265,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [runkeeper_scraper](runkeeper_scraper)
 
+### Day 34: February 17, 2018
+
+**Today's Work**: adding some exceptions
+
+**Arguments**: Python 3.5, classes, exceptions, methods
+
+**Link(s)**: [runkeeper_scraper](runkeeper_scraper)
+
