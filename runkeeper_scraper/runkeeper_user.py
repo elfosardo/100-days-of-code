@@ -18,15 +18,18 @@ class RunkeeperUser:
 
     def authenticate(self):
         login_url = '{}/login'.format(config.SITE_URL)
-        hidden_payload = self.get_hidden_payload(login_url)
+        hidden_payload = self.__get_hidden_payload(login_url)
         post = self.session.post(login_url, data=hidden_payload)
         cookie = post.cookies.get('checker')
         if not cookie:
-            raise rke.AuthenticationFailed('Cookie not generated. Wrong Password?')
+            raise rke.AuthenticationFailed()
         return True
 
-    def get_hidden_payload(self, login_url):
-        login_page = self.session.get(login_url)
+    def __get_hidden_payload(self, login_url):
+        try:
+            login_page = self.session.get(login_url)
+        except rke.ConnectionFailed(url=login_url):
+            raise
         my_soup = BfS(login_page.text, 'html.parser')
         login_form = my_soup.find_all('input', {'type': 'hidden'})
         hidden_payload = {}
@@ -40,7 +43,10 @@ class RunkeeperUser:
         if not self.is_authenticated:
             self.authenticate()
         home_url = '{}/home'.format(config.SITE_URL)
-        real_home = self.session.get(home_url)
+        try:
+            real_home = self.session.get(home_url)
+        except rke.ConnectionFailed(url=home_url):
+            raise
         soup = BfS(real_home.text, 'html.parser')
         profile_href = soup.find('a', {'href': re.compile(config.PROFILE_REGEX)})
         profile_path = profile_href.attrs['href']
@@ -49,7 +55,10 @@ class RunkeeperUser:
 
     def get_profile_info(self, info):
         request_url = '{}/user/{}/profile'.format(config.SITE_URL, self.profile_name)
-        request = self.session.get(request_url)
+        try:
+            request = self.session.get(request_url)
+        except rke.ConnectionFailed(url=request_url):
+            raise
         html_code = request.text
         soup = BfS(html_code, 'html.parser')
         profile_info = soup.find('div', {'id': info}).find('h1').text
@@ -70,7 +79,14 @@ class RunkeeperUser:
     def get_activities_by_month_year(self, month, year):
         start_date = "{}-01-{}".format(month, year)
         payload = {"userName": self.profile_name, "startDate": start_date}
-        url = "{}/activitiesByDateRange".format(config.SITE_URL)
-        request = self.session.get(url, params=payload)
+        activities_url = "{}/activitiesByDateRange".format(config.SITE_URL)
+        try:
+            request = self.session.get(activities_url, params=payload)
+        except rke.ConnectionFailed(url=activities_url):
+            raise
         activities_in_month = json.loads(request.text)['activities']
+
+        if not activities_in_month:
+            raise rke.NoActivitiesFound(month=month, year=year)
+
         return activities_in_month

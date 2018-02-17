@@ -1,6 +1,7 @@
 import config
-from bs4 import BeautifulSoup as BfS
 from datetime import datetime
+from bs4 import BeautifulSoup as BfS
+import runkeeper_errors as rke
 
 
 class RunkeeperActivity:
@@ -28,7 +29,10 @@ class RunkeeperActivity:
 
     def get_activity_datetime(self):
         activity_url = self.get_activity_url()
-        activity_session = self.session.get(activity_url)
+        try:
+            activity_session = self.session.get(activity_url)
+        except rke.ConnectionFailed(url=activity_url):
+            raise
         soup = BfS(activity_session.text, 'html.parser')
         datetime_form = soup.find('div', {'class': 'micro-text activitySubTitle'})
         for date_info in datetime_form:
