@@ -273,3 +273,13 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [runkeeper_scraper](runkeeper_scraper)
 
+### Skip Day: February 18, 2018
+
+### Day 35: February 19, 2018
+
+**Today's Work**: created a script to calculate days between two dates
+
+**Arguments**: Python 3.5, datetime, date conversion, datetools
+
+**Link(s)**: [datetools](datetools)
+

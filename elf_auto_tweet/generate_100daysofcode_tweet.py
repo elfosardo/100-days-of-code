@@ -5,6 +5,7 @@ HASHTAGS = '#100DaysOfCode #python'
 MYREPO_URL = 'https://github.com/elfosardo/100-days-of-code'
 TODAY = datetime.datetime.now()
 START_DATE = datetime.datetime(2018, 1, 14)
+SKIPPED = 1
 
 
 def generate_challenge_tweet(tweet_phrase):
@@ -14,7 +15,7 @@ def generate_challenge_tweet(tweet_phrase):
 
 
 def calc_days_passed():
-    days_passed = (TODAY - START_DATE).days
+    days_passed = (TODAY - START_DATE).days - SKIPPED
     return days_passed
 
 
