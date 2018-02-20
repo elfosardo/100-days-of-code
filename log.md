@@ -283,3 +283,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [datetools](datetools)
 
+### Day 36: February 20, 2018
+
+**Today's Work**: script to check uptime on a host
+
+**Arguments**: Python 3.5, paramiko
+
+**Link(s)**: [network_tools](network_tools)
+
