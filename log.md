@@ -291,3 +291,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [network_tools](network_tools)
 
+### Day 37: February 21, 2018 (still awake at 2:30 am...)
+
+**Today's Work**: playing with random module and rolling dice
+
+**Arguments**: Python 3.5, random
+
+**Link(s)**: [dice_roller](dice_roller)
+
