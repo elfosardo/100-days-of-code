@@ -16,6 +16,8 @@ def generate_challenge_tweet(tweet_phrase):
 
 def calc_days_passed():
     days_passed = (TODAY - START_DATE).days - SKIPPED
+    if args.am:
+        days_passed -= 1
     return days_passed
 
 
@@ -23,6 +25,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='100DaysOfCode Tweet generator')
     parser.add_argument('tweet_phrase', metavar='P', type=str,
                         help='one phrase to tweet them all, enclosed in quotation marks!')
+    parser.add_argument('--after_midnight', '-am', dest='am', action='store_true',
+                        help="select this to remove 1 day if you're up after midnight")
     args = parser.parse_args()
     mytweet = generate_challenge_tweet(args.tweet_phrase)
     print(mytweet)
