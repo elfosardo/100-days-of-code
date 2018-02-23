@@ -1,11 +1,6 @@
 import argparse
 import subprocess
 
-parser = argparse.ArgumentParser(description='Ping Host')
-parser.add_argument('host', metavar='H', help='host to ping')
-
-args = parser.parse_args()
-
 
 def ping_host(host):
     try:
@@ -16,7 +11,13 @@ def ping_host(host):
     return True
 
 
-if ping_host(args.host):
-    print('Host is alive!')
-else:
-    print('Host looks dead')
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Ping Host')
+    parser.add_argument('host', metavar='H', help='host to ping')
+
+    args = parser.parse_args()
+
+    if ping_host(args.host):
+        print('Host is alive!')
+    else:
+        print('Host looks dead')

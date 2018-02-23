@@ -299,3 +299,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [dice_roller](dice_roller)
 
+### Day 38: February 22, 2018 (another early morning...)
+
+**Today's Work**: script to convert ipv4 to integer or binary
+
+**Arguments**: Python 3.5, ipaddress, binascii
+
+**Link(s)**: [network_tools](network_tools)
+
