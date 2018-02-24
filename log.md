@@ -307,3 +307,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [network_tools](network_tools)
 
+### Day 39: February 23, 2018 (so no sleeping it is...)
+
+**Today's Work**: script to check if a port is open (portscanner)
+
+**Arguments**: Python 3.5, socket
+
+**Link(s)**: [network_tools](network_tools)
+

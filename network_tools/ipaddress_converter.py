@@ -30,7 +30,7 @@ if __name__ == '__main__':
     my_ip_address = ipaddress.ip_address(args.ip_address)
     my_int_ip_address = convert_to_integer()
 
-    converted_ip= ''
+    converted_ip = ''
 
     if args.integer:
         converted_ip = my_int_ip_address
