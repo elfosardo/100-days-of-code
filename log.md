@@ -315,3 +315,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [network_tools](network_tools)
 
+### Day 40: February 24, 2018 (it was yesterday)
+
+**Today's Work**: implementing host as a class
+
+**Arguments**: Python 3.5, class, methods
+
+**Link(s)**: [network_tools](network_tools)
+
