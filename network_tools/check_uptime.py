@@ -1,37 +1,21 @@
 import argparse
-import getpass
-import paramiko
-
-REMOTE_COMMAND = 'uptime'
+from host import Host
 
 
-def connect_to_host(hostname, username, password):
-    ssh_connection = paramiko.SSHClient()
-    ssh_connection.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_connection.connect(hostname, username=username, password=password)
-    return ssh_connection
-
-
-def execute_remote_command(ssh_connection):
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh_connection.exec_command(REMOTE_COMMAND)
-    command_output = ssh_stdout.readlines()
-    return command_output
+def generate_arguments():
+    parser = argparse.ArgumentParser(description='Connect to a host and reports the uptime')
+    parser.add_argument('host', metavar='H', help='host to connect to')
+    arguments = parser.parse_args()
+    return arguments
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Connect to a host and reports the uptime')
-    parser.add_argument('username', metavar='username',
-                        help='username used to connect')
-    parser.add_argument('hostname', metavar='hostname',
-                        help='the host we want to connect to')
-    args = parser.parse_args()
+    args = generate_arguments()
 
-    my_password = getpass.getpass()
+    my_host = Host(ip_address=args.host)
 
-    my_ssh_connection = connect_to_host(args.hostname, args.username, my_password)
-
-    result = execute_remote_command(my_ssh_connection)
+    result = my_host.get_uptime()
 
     print(' '.join(result))
 
-    my_ssh_connection.close()
+    my_host.close_ssh_connection()

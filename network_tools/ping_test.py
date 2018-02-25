@@ -1,23 +1,20 @@
 import argparse
-import subprocess
+from host import Host
 
 
-def ping_host(host):
-    try:
-        subprocess.check_output(["ping", "-c", "2", host])
-    except:
-        return False
-
-    return True
+def generate_arguments():
+    parser = argparse.ArgumentParser(description='Ping Host')
+    parser.add_argument('host', metavar='H', help='host to ping')
+    arguments = parser.parse_args()
+    return arguments
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Ping Host')
-    parser.add_argument('host', metavar='H', help='host to ping')
+    args = generate_arguments()
 
-    args = parser.parse_args()
+    my_host = Host(ip_address=args.host)
 
-    if ping_host(args.host):
-        print('Host is alive!')
+    if my_host.get_is_alive():
+        print('{} is alive!'.format(args.host))
     else:
-        print('Host looks dead')
+        print('{} is dead...'.format(args.host))
