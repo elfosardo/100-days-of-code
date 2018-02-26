@@ -23,11 +23,10 @@ class Host:
 
     def get_is_alive(self):
         self.is_alive = self.__ping_host()
-        return self.is_alive
 
     def get_uptime(self):
-        self.uptime = self.execute_remote_command(remote_command='uptime')
-        return self.uptime
+        uptime = self.execute_remote_command(remote_command='uptime')
+        self.uptime = ' '.join(uptime)
 
     def execute_remote_command(self, remote_command):
         if self.ssh_connection is None:
@@ -45,8 +44,6 @@ class Host:
                                username=user_session.username,
                                password=user_session.password)
         self.ssh_connection = ssh_connection
-        return self.ssh_connection
 
     def close_ssh_connection(self):
         self.ssh_connection.close()
-        return True

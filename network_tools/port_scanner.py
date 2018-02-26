@@ -11,7 +11,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Simple port scanner implementation')
     parser.add_argument('host', help='host to scan')
     parser.add_argument('port', help='port to scan')
-    parser.add_argument('--timouet', '-t', dest='timeout', default=5,
+    parser.add_argument('--timeout', '-t', dest='timeout', default=5,
                         help='Connection timeout; default to 5s')
     args = parser.parse_args()
 
