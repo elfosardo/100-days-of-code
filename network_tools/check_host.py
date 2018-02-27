@@ -18,13 +18,11 @@ if __name__ == '__main__':
     my_host = Host(ip_address=args.host)
 
     if args.ping:
-        my_host.get_is_alive()
+        my_host.set_status()
 
     if args.uptime:
-        my_host.get_uptime()
+        my_host.set_uptime()
 
-    for attribute in vars(my_host).items():
-        print(attribute)
+    my_host.show_host_status()
 
-    if my_host.ssh_connection is not None:
-        my_host.close_ssh_connection()
+    my_host.close_ssh_connection()
