@@ -1,4 +1,5 @@
 import paramiko
+import socket
 import subprocess
 from user import User
 
@@ -49,6 +50,20 @@ class Host:
                                username=user_session.username,
                                password=user_session.password)
         self.__ssh_connection = ssh_connection
+
+    @staticmethod
+    def portscanner(host, port, timeout=1):
+        my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        my_socket.settimeout(int(timeout))
+        test_port = my_socket.connect_ex((host, int(port)))
+        my_socket.close()
+        return test_port
+
+    def scan_ports(self, ports):
+        for port in ports:
+            my_test = self.portscanner(host=self.ip_address, port=port)
+            if my_test == 0:
+                self.open_ports.append(port)
 
     def close_ssh_connection(self):
         if self.__ssh_connection:

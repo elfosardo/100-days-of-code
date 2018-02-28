@@ -347,3 +347,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [network_tools](network_tools)
 
+### Day 44: February 28, 2018
+
+**Today's Work**: integrated portscanner into host and added option to check_host script
+
+**Arguments**: Python 3.5, class, methods, socket, portscan
+
+**Link(s)**: [network_tools](network_tools)
+

@@ -9,6 +9,8 @@ def generate_arguments():
                         help='ping the host')
     parser.add_argument('--uptime', '-u', dest='uptime', action='store_true',
                         help='reports uptime of the host')
+    parser.add_argument('--scan_ports', '-s', dest='ports', type=str,
+                        help='comma separated list of ports to scan')
     arguments = parser.parse_args()
     return arguments
 
@@ -22,6 +24,10 @@ if __name__ == '__main__':
 
     if args.uptime:
         my_host.set_uptime()
+
+    if len(args.ports) != 0:
+        ports = args.ports.split(',')
+        my_host.scan_ports(ports)
 
     my_host.show_host_status()
 
