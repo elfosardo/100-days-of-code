@@ -355,11 +355,19 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [network_tools](network_tools)
 
-### Day 45: May 01, 2018
+### Day 45: March 01, 2018
 
 **Today's Work**: built a script to get information on a network
 
 **Arguments**: Python 3.5, ipaddress
 
 **Link(s)**: [network_tools](network_tools)
+
+### Day 46: March 02, 2018
+
+**Today's Work**: built a script to send an email from the command line using gmail
+
+**Arguments**: Python 3.5, email, smtplib, config
+
+**Link(s)**: [email_client](email_client)
 
