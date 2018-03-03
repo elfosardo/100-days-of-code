@@ -371,3 +371,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [email_client](email_client)
 
+### Day 47: March 03, 2018
+
+**Today's Work**: added option to send text from a file as body
+
+**Arguments**: Python 3.5, email, smtplib, config, file
+
+**Link(s)**: [email_client](email_client)
+
