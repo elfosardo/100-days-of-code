@@ -379,3 +379,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [email_client](email_client)
 
+### Day 48: March 04, 2018
+
+**Today's Work**: created a currency conversion script using apis from openexchangerates with free account
+
+**Arguments**: Python 3.5, requests, config, argparse, openexchangerates
+
+**Link(s)**: [openexchange_converter](openexchange_converter)
+

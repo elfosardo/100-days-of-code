@@ -54,19 +54,26 @@ def convert_currencies():
     return to_curr_value
 
 
+def validate_currency(currency):
+    try:
+        my_valid_currencies = get_valid_currencies()
+        if currency not in my_valid_currencies:
+            raise KeyError
+    except KeyError:
+        exit('Currency not valid: {}'.format(currency))
+
+
 if __name__ == '__main__':
     args = get_arguments()
 
     if args.get_curr_list:
         print_valid_currencies()
 
-    my_valid_currencies = get_valid_currencies()
+    for my_currency in [args.from_curr, args.to_curr]:
+        validate_currency(my_currency)
 
-    if args.from_curr in my_valid_currencies:
-        from_curr_rate = get_currency_rate(args.from_curr)
-
-    if args.to_curr in my_valid_currencies:
-        to_curr_rate = get_currency_rate(args.to_curr)
+    from_curr_rate = get_currency_rate(args.from_curr)
+    to_curr_rate = get_currency_rate(args.to_curr)
 
     to_curr_final_value = convert_currencies()
 
