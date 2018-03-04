@@ -27,6 +27,7 @@ def generate_arguments():
 
 
 def compose_message():
+    msg = ''
     if args.message is not None:
         msg = MIMEText(args.message)
     elif args.msg_file is not None:
