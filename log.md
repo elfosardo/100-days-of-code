@@ -387,3 +387,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [openexchange_converter](openexchange_converter)
 
+### Day 49: March 05, 2018
+
+**Today's Work**: built a gui for the currency converter using tkinter libraries
+
+**Arguments**: Python 3.5, tkinter
+
+**Link(s)**: [openexchange_converter](openexchange_converter)
+

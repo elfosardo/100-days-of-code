@@ -49,8 +49,8 @@ def get_currency_rate(currency):
     return currency_rate
 
 
-def convert_currencies():
-    to_curr_value = float(args.from_curr_amount) * to_curr_rate / from_curr_rate
+def convert_currencies(from_curr_amount, to_curr_rate, from_curr_rate):
+    to_curr_value = float(from_curr_amount) * to_curr_rate / from_curr_rate
     return to_curr_value
 
 
@@ -72,10 +72,12 @@ if __name__ == '__main__':
     for my_currency in [args.from_curr, args.to_curr]:
         validate_currency(my_currency)
 
-    from_curr_rate = get_currency_rate(args.from_curr)
-    to_curr_rate = get_currency_rate(args.to_curr)
+    my_from_curr_rate = get_currency_rate(args.from_curr)
+    my_to_curr_rate = get_currency_rate(args.to_curr)
 
-    to_curr_final_value = convert_currencies()
+    to_curr_final_value = convert_currencies(from_curr_amount=args.from_curr_amount,
+                                             to_curr_rate=my_to_curr_rate,
+                                             from_curr_rate=my_from_curr_rate)
 
     print('{} {} = {} {}'.format(args.from_curr_amount,
                                  args.from_curr,
