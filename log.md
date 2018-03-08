@@ -403,3 +403,13 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Skip Day: March 07, 2018
+
+### Day 51: March 08, 2018
+
+**Today's Work**: reformatting the currency converter gui 
+
+**Arguments**: Python 3.5, tkinter, requests, openexchangerates
+
+**Link(s)**: [openexchange_converter](openexchange_converter)
+
