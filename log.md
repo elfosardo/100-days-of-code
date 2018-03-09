@@ -413,3 +413,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [openexchange_converter](openexchange_converter)
 
+### Day 52: March 09, 2018
+
+**Today's Work**: built a dangerous fibonacci sequence calculator
+
+**Arguments**: Python 3.5, fibonacci sequence
+
+**Link(s)**: [fibonacci](fibonacci)
+
