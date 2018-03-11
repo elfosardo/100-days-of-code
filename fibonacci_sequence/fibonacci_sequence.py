@@ -1,5 +1,7 @@
 import argparse
 
+from fibonacci_graph import FibonacciGraph
+
 
 def fibonacci(digit):
     if digit < 2:
@@ -51,3 +53,8 @@ if __name__ == '__main__':
         print(' digit value')
         for k, v in my_sequence.items():
             print(' {:>5} {}'.format(k, v))
+
+        my_graph = FibonacciGraph([ k for k in my_sequence.keys()],
+                                  [v for v in my_sequence.values()]
+                                  )
+        my_graph.plot_fibonacci_sequence()

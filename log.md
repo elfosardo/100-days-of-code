@@ -429,3 +429,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Day 54: March 11, 2018
+
+**Today's Work**: using matplotlib to plot a graph of the fibonacci sequence
+
+**Arguments**: Python 3.5, matplotlib, fibonacci
+
+**Link(s)**: [fibonacci_sequence](fibonacci_sequence)
+
