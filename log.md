@@ -437,3 +437,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [fibonacci_sequence](fibonacci_sequence)
 
+### Day 55: March 12, 2018
+
+**Today's Work**: testing oauth2 with goodreads apis
+
+**Arguments**: Python 3.5, oauth2, goodreads
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+

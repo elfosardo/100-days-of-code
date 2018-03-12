@@ -1,15 +1,6 @@
-import argparse
 import requests
 import xmltodict
 import config as cfg
-
-
-def get_arguments():
-    parser = argparse.ArgumentParser('Goodreads python wrapper')
-    parser.add_argument('book_name',
-                        help='Name of the book to search')
-    arguments = parser.parse_args()
-    return arguments
 
 
 def get_user_shelves_xml():
@@ -28,11 +19,9 @@ def get_user_shelves():
 
 
 if __name__ == '__main__':
-    args = get_arguments()
-
     my_shelves = get_user_shelves()
 
     print('{:<20} {:<15}'.format('Shelf name', 'Books in shelf'))
 
-    for shelf in my_shelves:
-        print('{:<20} {:<15}'.format(shelf['name'], shelf['book_count']['#text']))
+    for my_shelf in my_shelves:
+        print('{:<20} {:<15}'.format(my_shelf['name'], my_shelf['book_count']['#text']))
