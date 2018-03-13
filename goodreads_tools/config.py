@@ -9,3 +9,4 @@ config.read('config.ini')
 api_key = config['DEFAULT']['GOODREADS_API_KEY']
 api_secret = config['DEFAULT']['GOODREADS_API_SECRET']
 user_id = config['DEFAULT']['USER_ID']
+user_email = config['DEFAULT']['USER_EMAIL']

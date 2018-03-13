@@ -445,3 +445,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Day 56: March 13, 2018
+
+**Today's Work**: using Selenium to login and accept the authorization token for the goodreads apis
+
+**Arguments**: Python 3.5, oauth2, selenium, goodreads
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+
