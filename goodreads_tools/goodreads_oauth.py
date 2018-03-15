@@ -8,16 +8,18 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 
+def clear_and_fill_element(driver, element_id, value):
+    element = driver.find_element_by_id(element_id)
+    element.clear()
+    element.send_keys(value)
+
+
 def authorize_token():
     driver = webdriver.Firefox()
     driver.get(authorize_link)
     assert 'Sign in' in driver.title
-    username_elem = driver.find_element_by_id('user_email')
-    username_elem.clear()
-    username_elem.send_keys(cfg.user_email)
-    password_elem = driver.find_element_by_id('user_password')
-    password_elem.clear()
-    password_elem.send_keys(my_password)
+    clear_and_fill_element(driver=driver, element_id='user_email', value=cfg.user_email)
+    clear_and_fill_element(driver=driver, element_id='user_password', value=my_password)
     remember_me_elem = driver.find_element_by_id('remember_me')
     remember_me_elem.click()
     driver.find_element_by_name('next').click()
