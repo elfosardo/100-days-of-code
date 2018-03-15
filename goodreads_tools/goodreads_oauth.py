@@ -1,9 +1,11 @@
 import oauth2
 import config as cfg
 import getpass
+import time
 import urllib.parse as up
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 
 def authorize_token():
@@ -19,7 +21,11 @@ def authorize_token():
     remember_me_elem = driver.find_element_by_id('remember_me')
     remember_me_elem.click()
     driver.find_element_by_name('next').click()
-    driver.find_element_by_xpath("//input[@name='commit' and @value='Allow access']").click()
+    try:
+        driver.find_element_by_xpath("//input[@name='commit' and @value='Allow access']").click()
+    except NoSuchElementException:
+        time.sleep(2)
+    driver.close()
 
 
 if __name__ == '__main__':
