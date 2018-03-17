@@ -469,3 +469,12 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Skip Day: March 16, 2018
+
+### Day 59: March 17, 2018
+
+**Today's Work**: adding decorator to get execution time; moving graph to optional
+
+**Arguments**: Python 3.5, decorators
+
+**Link(s)**: [fibonacci_sequence](fibonacci_sequence)
