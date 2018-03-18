@@ -8,6 +8,14 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 
+def get_content(client, token_url, req_type):
+    response, content = client.request(token_url, req_type)
+    if response['status'] != '200':
+        raise Exception('Invalid response: {} {}, content: '.format(response['status'],
+                                                                    content))
+    return content
+
+
 def clear_and_fill_element(driver, element_id, value):
     element = driver.find_element_by_id(element_id)
     element.clear()
@@ -41,15 +49,36 @@ if __name__ == '__main__':
 
     client = oauth2.Client(consumer)
 
-    response, content = client.request(request_token_url, 'GET')
-    if response['status'] != '200':
-        raise Exception('Invalid response: {} {}, content: '.format(response['status'], content))
+    content = get_content(client=client,
+                          token_url=request_token_url,
+                          req_type='GET')
 
     request_token = dict(up.parse_qsl(content.decode('utf-8')))
 
-    authorize_link = '{}?oauth_token={}'.format(authorize_url, request_token['oauth_token'])
+    authorize_link = '{}?oauth_token={}'.format(authorize_url,
+                                                request_token['oauth_token'])
     print('Authorizing token using Selenium driver')
     print(authorize_link)
     my_password = getpass.getpass('Goodreads Password: ')
 
     authorize_token()
+
+    token = oauth2.Token(request_token['oauth_token'],
+                         request_token['oauth_token_secret'])
+
+    client = oauth2.Client(consumer, token)
+
+    content = get_content(client=client,
+                          token_url=access_token_url,
+                          req_type='POST')
+
+    access_token = dict(up.parse_qsl(content.decode('utf-8')))
+    token_key = access_token['oauth_token']
+    token_secret = access_token['oauth_token_secret']
+
+    print('OAuth token codes')
+    print('oauth token key:    {}'.format(token_key))
+    print('oauth token secret: {}'.format(token_secret))
+
+    token = oauth2.Token(token_key, token_secret)
+    print(token)
