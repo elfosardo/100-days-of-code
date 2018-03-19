@@ -2,18 +2,25 @@ import oauth2
 import config as cfg
 import getpass
 import time
+import xml
 import urllib.parse as up
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 
-def get_content(client, token_url, req_type):
-    response, content = client.request(token_url, req_type)
+def get_content(client, request_url, req_type):
+    response, content = client.request(request_url, req_type)
     if response['status'] != '200':
         raise Exception('Invalid response: {} {}, content: '.format(response['status'],
                                                                     content))
     return content
+
+
+def get_user_id(content):
+    userxml = xml.dom.minidom.parseString(content)
+    user_id = userxml.getElementsByTagName('user')[0].attributes['id'].value
+    return str(user_id)
 
 
 def clear_and_fill_element(driver, element_id, value):
@@ -43,6 +50,7 @@ if __name__ == '__main__':
     request_token_url = '{}/oauth/request_token'.format(url)
     authorize_url = '{}/oauth/authorize'.format(url)
     access_token_url = '{}/oauth/access_token'.format(url)
+    auth_user_url = '{}/api/auth_user'.format(url)
 
     consumer = oauth2.Consumer(key=cfg.api_key,
                                secret=cfg.api_secret)
@@ -50,7 +58,7 @@ if __name__ == '__main__':
     client = oauth2.Client(consumer)
 
     content = get_content(client=client,
-                          token_url=request_token_url,
+                          request_url=request_token_url,
                           req_type='GET')
 
     request_token = dict(up.parse_qsl(content.decode('utf-8')))
@@ -69,7 +77,7 @@ if __name__ == '__main__':
     client = oauth2.Client(consumer, token)
 
     content = get_content(client=client,
-                          token_url=access_token_url,
+                          request_url=access_token_url,
                           req_type='POST')
 
     access_token = dict(up.parse_qsl(content.decode('utf-8')))
@@ -82,3 +90,13 @@ if __name__ == '__main__':
 
     token = oauth2.Token(token_key, token_secret)
     print(token)
+
+    client = oauth2.Client(consumer, token)
+
+    content = get_content(client=client,
+                          request_url=auth_user_url,
+                          req_type='GET')
+
+    user_id = get_user_id(content)
+
+    print('My user id: {}'.format(user_id))
