@@ -45,6 +45,17 @@ def authorize_token():
     driver.close()
 
 
+def update_config_file(section, new_values):
+    for k, v in new_values.items():
+        cfg.config[section][k] = v
+    try:
+        with open('config.ini', 'w') as config_file:
+            cfg.config.write(config_file)
+    except IOError:
+        print('cannot open file {}'.format(config_file))
+    config_file.close()
+
+
 if __name__ == '__main__':
     url = cfg.API_URL
     request_token_url = '{}/oauth/request_token'.format(url)
@@ -66,7 +77,6 @@ if __name__ == '__main__':
     authorize_link = '{}?oauth_token={}'.format(authorize_url,
                                                 request_token['oauth_token'])
     print('Authorizing token using Selenium driver')
-    print(authorize_link)
     my_password = getpass.getpass('Goodreads Password: ')
 
     authorize_token()
@@ -84,19 +94,23 @@ if __name__ == '__main__':
     token_key = access_token['oauth_token']
     token_secret = access_token['oauth_token_secret']
 
-    print('OAuth token codes')
-    print('oauth token key:    {}'.format(token_key))
-    print('oauth token secret: {}'.format(token_secret))
+    print('Saving OAuth token codes in config file')
 
+    new_config_values = {'TOKEN_KEY': token_key,
+                         'TOKEN_SECRET': token_secret}
+
+    update_config_file(section='SECRETS',
+                       new_values=new_config_values)
+
+    print('OAuth token codes saved!')
+
+    # Testing new config values
+    token_key = cfg.config['SECRETS']['TOKEN_KEY']
+    token_secret = cfg.config['SECRETS']['TOKEN_SECRET']
     token = oauth2.Token(token_key, token_secret)
-    print(token)
-
     client = oauth2.Client(consumer, token)
-
     content = get_content(client=client,
                           request_url=auth_user_url,
                           req_type='GET')
-
     user_id = get_user_id(content)
-
     print('My user id: {}'.format(user_id))
