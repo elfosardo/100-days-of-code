@@ -17,24 +17,42 @@ def get_content(client, request_url, req_type):
     return content
 
 
-def get_user_id(content):
+def get_user_id():
+    token_key = cfg.config['SECRETS']['TOKEN_KEY']
+    token_secret = cfg.config['SECRETS']['TOKEN_SECRET']
+    token = oauth2.Token(token_key, token_secret)
+    consumer = oauth2.Consumer(key=cfg.api_key,
+                               secret=cfg.api_secret)
+    client = oauth2.Client(consumer, token)
+    content = get_content(client=client,
+                          request_url=cfg.auth_user_url,
+                          req_type='GET')
     userxml = xml.dom.minidom.parseString(content)
     user_id = userxml.getElementsByTagName('user')[0].attributes['id'].value
     return str(user_id)
+
+
+def save_user_id():
+    user_id = get_user_id()
+    new_config_values = {'USER_ID': user_id}
+    update_config_file(section='DEFAULT',
+                       new_values=new_config_values)
+    return 'user_id saved in configuration file'
 
 
 def clear_and_fill_element(driver, element_id, value):
     element = driver.find_element_by_id(element_id)
     element.clear()
     element.send_keys(value)
+    return 'element filled'
 
 
-def authorize_token():
+def authorize_token(authorize_link, password):
     driver = webdriver.Firefox()
     driver.get(authorize_link)
     assert 'Sign in' in driver.title
     clear_and_fill_element(driver=driver, element_id='user_email', value=cfg.user_email)
-    clear_and_fill_element(driver=driver, element_id='user_password', value=my_password)
+    clear_and_fill_element(driver=driver, element_id='user_password', value=password)
     remember_me_elem = driver.find_element_by_id('remember_me')
     remember_me_elem.click()
     driver.find_element_by_name('next').click()
@@ -43,6 +61,7 @@ def authorize_token():
     except NoSuchElementException:
         time.sleep(2)
     driver.close()
+    return 'token authorized'
 
 
 def update_config_file(section, new_values):
@@ -54,32 +73,29 @@ def update_config_file(section, new_values):
     except IOError:
         print('cannot open file {}'.format(config_file))
     config_file.close()
+    return 'config file updated'
 
 
-if __name__ == '__main__':
-    url = cfg.API_URL
-    request_token_url = '{}/oauth/request_token'.format(url)
-    authorize_url = '{}/oauth/authorize'.format(url)
-    access_token_url = '{}/oauth/access_token'.format(url)
-    auth_user_url = '{}/api/auth_user'.format(url)
-
+def get_token_values():
     consumer = oauth2.Consumer(key=cfg.api_key,
                                secret=cfg.api_secret)
 
     client = oauth2.Client(consumer)
 
     content = get_content(client=client,
-                          request_url=request_token_url,
+                          request_url=cfg.request_token_url,
                           req_type='GET')
 
     request_token = dict(up.parse_qsl(content.decode('utf-8')))
 
-    authorize_link = '{}?oauth_token={}'.format(authorize_url,
+    authorize_link = '{}?oauth_token={}'.format(cfg.authorize_url,
                                                 request_token['oauth_token'])
+
     print('Authorizing token using Selenium driver')
     my_password = getpass.getpass('Goodreads Password: ')
 
-    authorize_token()
+    authorize_token(authorize_link=authorize_link,
+                    password=my_password)
 
     token = oauth2.Token(request_token['oauth_token'],
                          request_token['oauth_token_secret'])
@@ -87,7 +103,7 @@ if __name__ == '__main__':
     client = oauth2.Client(consumer, token)
 
     content = get_content(client=client,
-                          request_url=access_token_url,
+                          request_url=cfg.access_token_url,
                           req_type='POST')
 
     access_token = dict(up.parse_qsl(content.decode('utf-8')))
@@ -102,15 +118,4 @@ if __name__ == '__main__':
     update_config_file(section='SECRETS',
                        new_values=new_config_values)
 
-    print('OAuth token codes saved!')
-
-    # Testing new config values
-    token_key = cfg.config['SECRETS']['TOKEN_KEY']
-    token_secret = cfg.config['SECRETS']['TOKEN_SECRET']
-    token = oauth2.Token(token_key, token_secret)
-    client = oauth2.Client(consumer, token)
-    content = get_content(client=client,
-                          request_url=auth_user_url,
-                          req_type='GET')
-    user_id = get_user_id(content)
-    print('My user id: {}'.format(user_id))
+    return 'OAuth token codes saved in configuration file'
