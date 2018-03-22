@@ -497,9 +497,25 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 ### Day 62: March 20, 2018
 
-**Today's Work**: saving oauth tokens in configuration file
+**Today's Work**: built a function to save oauth tokens in configuration file
 
 **Arguments**: Python 3.5, goodreads apis, oauth2, configparser
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+
+### Day 63: March 21, 2018
+
+**Today's Work**: lot of refactoring including moving goodreads_oauth to pure module
+
+**Arguments**: Python 3.5, goodreads apis, oauth2, configparser
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+
+### Day 64: March 22, 2018
+
+**Today's Work**: moar refactoring and adding arguments
+
+**Arguments**: Python 3.5, goodreads apis, oauth2, argparse
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 

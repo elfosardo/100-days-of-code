@@ -1,7 +1,35 @@
+import argparse
 import requests
 import xmltodict
 import config as cfg
 import goodreads_oauth as go
+
+
+def get_arguments():
+    parser = argparse.ArgumentParser('Goodreads CLI tools')
+    parser.add_argument('--shelves', '-s', action='store_true',
+                        help='Print info on user shelves')
+    arguments = parser.parse_args()
+    return arguments
+
+
+def add_token_values():
+    try:
+        token_key = cfg.config['SECRETS']['TOKEN_KEY']
+        token_secret = cfg.config['SECRETS']['TOKEN_SECRET']
+    except KeyError:
+        print('token value not found')
+        print(go.save_token_values())
+    return True
+
+
+def add_user_id():
+    try:
+        user_id = cfg.config['DEFAULT']['USER_ID']
+    except KeyError:
+        print('user id not found')
+        print(go.save_user_id())
+    return True
 
 
 def get_user_shelves_xml(user_id):
@@ -19,27 +47,22 @@ def get_user_shelves(user_id):
     return user_shelves
 
 
+def print_shelves_info(user_id):
+    shelves = get_user_shelves(user_id)
+    print('{:<20} {:<15}'.format('Shelf name', 'Books in shelf'))
+    for shelf in shelves:
+        print('{:<20} {:<15}'.format(shelf['name'], shelf['book_count']['#text']))
+
+
 if __name__ == '__main__':
-    try:
-        token_key = cfg.config['SECRETS']['TOKEN_KEY']
-        token_secret = cfg.config['SECRETS']['TOKEN_SECRET']
-    except KeyError:
-        print('token value not found')
-        print(go.get_token_values())
+    args = get_arguments()
 
-    try:
-        my_user_id = cfg.config['DEFAULT']['USER_ID']
-    except KeyError:
-        print('user id not found')
-        print(go.save_user_id())
+    add_token_values()
+    add_user_id()
 
-    # testing user_id in config file
+    # just printing user_id
     my_user_id = cfg.config['DEFAULT']['USER_ID']
     print('My user id: {}'.format(my_user_id))
 
-    my_shelves = get_user_shelves(my_user_id)
-
-    print('{:<20} {:<15}'.format('Shelf name', 'Books in shelf'))
-
-    for my_shelf in my_shelves:
-        print('{:<20} {:<15}'.format(my_shelf['name'], my_shelf['book_count']['#text']))
+    if args.shelves:
+        print_shelves_info(my_user_id)

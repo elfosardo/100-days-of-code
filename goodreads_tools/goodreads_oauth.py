@@ -110,12 +110,14 @@ def get_token_values():
     token_key = access_token['oauth_token']
     token_secret = access_token['oauth_token_secret']
 
-    print('Saving OAuth token codes in config file')
+    return token_key, token_secret
 
+
+def save_token_values():
+    token_key, token_secret = get_token_values()
+    print('Saving OAuth token codes in config file')
     new_config_values = {'TOKEN_KEY': token_key,
                          'TOKEN_SECRET': token_secret}
-
     update_config_file(section='SECRETS',
                        new_values=new_config_values)
-
     return 'OAuth token codes saved in configuration file'
