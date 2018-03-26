@@ -121,3 +121,31 @@ def save_token_values():
     update_config_file(section='SECRETS',
                        new_values=new_config_values)
     return 'OAuth token codes saved in configuration file'
+
+
+def get_friends_xml(user_id):
+    token_key = cfg.config['SECRETS']['TOKEN_KEY']
+    token_secret = cfg.config['SECRETS']['TOKEN_SECRET']
+    token = oauth2.Token(token_key, token_secret)
+    consumer = oauth2.Consumer(key=cfg.api_key,
+                               secret=cfg.api_secret)
+    client = oauth2.Client(consumer, token)
+    friend_list_url = '{}/{}?format=xml'.format(cfg.friend_list_url, user_id)
+    xmlcontent = get_content(client=client,
+                             request_url=friend_list_url,
+                             req_type='GET')
+    return xmlcontent
+
+
+def get_friends_list(user_id):
+    friends_list = []
+    xmlcontent = get_friends_xml(user_id)
+    content = xml.dom.minidom.parseString(xmlcontent)
+    friends_dom_list = content.getElementsByTagName('user')
+    for friend in friends_dom_list[1:]:
+        friend_name_elem = friend.getElementsByTagName('name')[0]
+        friend_name = friend_name_elem.firstChild.nodeValue
+        friends_list.append(friend_name)
+        # friend_id = friend.getElementsByTagName('id')[0]
+        # print(friend_id.firstChild.nodeValue)
+    return friends_list

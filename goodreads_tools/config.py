@@ -7,6 +7,7 @@ request_token_url = '{}/oauth/request_token'.format(API_URL)
 authorize_url = '{}/oauth/authorize'.format(API_URL)
 access_token_url = '{}/oauth/access_token'.format(API_URL)
 auth_user_url = '{}/api/auth_user'.format(API_URL)
+friend_list_url = '{}/friend/user'.format(API_URL)
 
 config = configparser.ConfigParser()
 config.read('config.ini')
