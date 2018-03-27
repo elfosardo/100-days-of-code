@@ -7,6 +7,10 @@ import goodreads_oauth as go
 
 def get_arguments():
     parser = argparse.ArgumentParser('Goodreads CLI tools')
+    parser.add_argument('--followers', '-r', action='store_true',
+                        help='Print list of followers')
+    parser.add_argument('--following', '-g', action='store_true',
+                        help='Print list of people user\'s following')
     parser.add_argument('--friends', '-f', action='store_true',
                         help='Print list of friends')
     parser.add_argument('--shelves', '-s', action='store_true',
@@ -35,7 +39,7 @@ def check_user_id():
 
 
 def get_user_shelves_xml(user_id):
-    url = '{}/shelf/list.xml'.format(cfg.API_URL)
+    url = cfg.shelves_list_url
     user_shelves_xml = requests.get(url, {'key': cfg.api_key, 'user_id': user_id}).content
     return user_shelves_xml
 
@@ -62,6 +66,18 @@ def print_friends_list(user_id):
         print(friend_name)
 
 
+def print_followers_list(user_id):
+    followers_list = go.get_followers_list(user_id)
+    for follower_name in sorted(followers_list):
+        print(follower_name)
+
+
+def print_following_list(user_id):
+    following_list = go.get_following_list(user_id)
+    for following_name in sorted(following_list):
+        print(following_name)
+
+
 if __name__ == '__main__':
     args = get_arguments()
 
@@ -71,6 +87,12 @@ if __name__ == '__main__':
     # just printing user_id
     my_user_id = cfg.config['DEFAULT']['USER_ID']
     print('My user id: {}'.format(my_user_id))
+
+    if args.following:
+        print_following_list(my_user_id)
+
+    if args.followers:
+        print_followers_list(my_user_id)
 
     if args.shelves:
         print_shelves_info(my_user_id)

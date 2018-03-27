@@ -149,3 +149,59 @@ def get_friends_list(user_id):
         # friend_id = friend.getElementsByTagName('id')[0]
         # print(friend_id.firstChild.nodeValue)
     return friends_list
+
+
+def get_followers_xml(user_id):
+    token_key = cfg.config['SECRETS']['TOKEN_KEY']
+    token_secret = cfg.config['SECRETS']['TOKEN_SECRET']
+    token = oauth2.Token(token_key, token_secret)
+    consumer = oauth2.Consumer(key=cfg.api_key,
+                               secret=cfg.api_secret)
+    client = oauth2.Client(consumer, token)
+    followers_list_url = cfg.followers_list_url.replace('USER_ID', user_id)
+    xmlcontent = get_content(client=client,
+                             request_url=followers_list_url,
+                             req_type='GET')
+    return xmlcontent
+
+
+def get_followers_list(user_id):
+    followers_list = []
+    xmlcontent = get_followers_xml(user_id)
+    content = xml.dom.minidom.parseString(xmlcontent)
+    friends_dom_list = content.getElementsByTagName('user')
+    for friend in friends_dom_list[1:]:
+        friend_name_elem = friend.getElementsByTagName('name')[0]
+        friend_name = friend_name_elem.firstChild.nodeValue
+        followers_list.append(friend_name)
+        # friend_id = friend.getElementsByTagName('id')[0]
+        # print(friend_id.firstChild.nodeValue)
+    return followers_list
+
+
+def get_following_xml(user_id):
+    token_key = cfg.config['SECRETS']['TOKEN_KEY']
+    token_secret = cfg.config['SECRETS']['TOKEN_SECRET']
+    token = oauth2.Token(token_key, token_secret)
+    consumer = oauth2.Consumer(key=cfg.api_key,
+                               secret=cfg.api_secret)
+    client = oauth2.Client(consumer, token)
+    following_list_url = cfg.following_list_url.replace('USER_ID', user_id)
+    xmlcontent = get_content(client=client,
+                             request_url=following_list_url,
+                             req_type='GET')
+    return xmlcontent
+
+
+def get_following_list(user_id):
+    following_list = []
+    xmlcontent = get_following_xml(user_id)
+    content = xml.dom.minidom.parseString(xmlcontent)
+    friends_dom_list = content.getElementsByTagName('user')
+    for friend in friends_dom_list[1:]:
+        friend_name_elem = friend.getElementsByTagName('name')[0]
+        friend_name = friend_name_elem.firstChild.nodeValue
+        following_list.append(friend_name)
+        # friend_id = friend.getElementsByTagName('id')[0]
+        # print(friend_id.firstChild.nodeValue)
+    return following_list
