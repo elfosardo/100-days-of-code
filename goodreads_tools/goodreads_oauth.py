@@ -137,42 +137,39 @@ def get_xml_content(request_url, request_type):
 
 
 def get_friends_list(user_id):
-    friends_list = []
     friend_list_url = '{}/{}?format=xml'.format(cfg.friend_list_url, user_id)
     xml_content = get_xml_content(request_url=friend_list_url,
                                   request_type='GET')
     content = xml.dom.minidom.parseString(xml_content)
     friends_dom_list = content.getElementsByTagName('user')
-    for friend in friends_dom_list[1:]:
-        friend_name_elem = friend.getElementsByTagName('name')[0]
-        friend_name = friend_name_elem.firstChild.nodeValue
-        friends_list.append(friend_name)
+    friends_list = generate_info_list(friends_dom_list)
     return friends_list
 
 
 def get_following_list(user_id):
-    following_list = []
     following_list_url = cfg.following_list_url.replace('USER_ID', user_id)
     xml_content = get_xml_content(request_url=following_list_url,
                                   request_type='GET')
     content = xml.dom.minidom.parseString(xml_content)
     following_dom_list = content.getElementsByTagName('user')
-    for following in following_dom_list[1:]:
-        following_name_elem = following.getElementsByTagName('name')[0]
-        following_name = following_name_elem.firstChild.nodeValue
-        following_list.append(following_name)
+    following_list = generate_info_list(following_dom_list)
     return following_list
 
 
 def get_followers_list(user_id):
-    followers_list = []
     followers_list_url = cfg.followers_list_url.replace('USER_ID', user_id)
     xml_content = get_xml_content(request_url=followers_list_url,
                                   request_type='GET')
     content = xml.dom.minidom.parseString(xml_content)
     followers_dom_list = content.getElementsByTagName('user')
-    for followers in followers_dom_list[1:]:
+    followers_list = generate_info_list(followers_dom_list)
+    return followers_list
+
+
+def generate_info_list(dom_list):
+    info_list = []
+    for followers in dom_list[1:]:
         followers_name_elem = followers.getElementsByTagName('name')[0]
         followers_name = followers_name_elem.firstChild.nodeValue
-        followers_list.append(followers_name)
-    return followers_list
+        info_list.append(followers_name)
+    return info_list
