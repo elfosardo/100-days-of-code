@@ -541,8 +541,17 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 ### Day 67: March 29, 2018
 
-**Today's Work**: adding functions to print followers and following
+**Today's Work**: starting refactoring to reduce code duplication
 
-**Arguments**: Python 3.5, goodreads apis, oauth2, argparse, xml dom
+**Arguments**: Python 3.5, goodreads apis, oauth2, argparse, xml dom, lists
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
+
+### Day 68: March 30, 2018
+
+**Today's Work**: more refactoring
+
+**Arguments**: Python 3.5, goodreads apis, oauth2, argparse, xml dom, lists
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+

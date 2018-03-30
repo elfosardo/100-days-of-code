@@ -137,37 +137,29 @@ def get_xml_content(request_url, request_type):
 
 
 def get_friends_list(user_id):
-    friend_list_url = '{}/{}?format=xml'.format(cfg.friend_list_url, user_id)
-    xml_content = get_xml_content(request_url=friend_list_url,
-                                  request_type='GET')
-    content = xml.dom.minidom.parseString(xml_content)
-    friends_dom_list = content.getElementsByTagName('user')
-    friends_list = generate_info_list(friends_dom_list)
+    friends_list_url = '{}/{}?format=xml'.format(cfg.friend_list_url, user_id)
+    friends_list = generate_info_list(friends_list_url)
     return friends_list
 
 
 def get_following_list(user_id):
     following_list_url = cfg.following_list_url.replace('USER_ID', user_id)
-    xml_content = get_xml_content(request_url=following_list_url,
-                                  request_type='GET')
-    content = xml.dom.minidom.parseString(xml_content)
-    following_dom_list = content.getElementsByTagName('user')
-    following_list = generate_info_list(following_dom_list)
+    following_list = generate_info_list(following_list_url)
     return following_list
 
 
 def get_followers_list(user_id):
     followers_list_url = cfg.followers_list_url.replace('USER_ID', user_id)
-    xml_content = get_xml_content(request_url=followers_list_url,
-                                  request_type='GET')
-    content = xml.dom.minidom.parseString(xml_content)
-    followers_dom_list = content.getElementsByTagName('user')
-    followers_list = generate_info_list(followers_dom_list)
+    followers_list = generate_info_list(followers_list_url)
     return followers_list
 
 
-def generate_info_list(dom_list):
+def generate_info_list(list_url):
     info_list = []
+    xml_content = get_xml_content(request_url=list_url,
+                                  request_type='GET')
+    content = xml.dom.minidom.parseString(xml_content)
+    dom_list = content.getElementsByTagName('user')
     for followers in dom_list[1:]:
         followers_name_elem = followers.getElementsByTagName('name')[0]
         followers_name = followers_name_elem.firstChild.nodeValue
