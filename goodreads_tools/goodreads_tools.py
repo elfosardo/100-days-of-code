@@ -7,6 +7,8 @@ import goodreads_oauth as go
 
 def get_arguments():
     parser = argparse.ArgumentParser('Goodreads CLI tools')
+    parser.add_argument('--books', '-b', action='store_true',
+                        help='Print list of owned books')
     parser.add_argument('--followers', '-r', action='store_true',
                         help='Print list of followers')
     parser.add_argument('--following', '-g', action='store_true',
@@ -78,6 +80,12 @@ def print_following_list(user_id):
         print(following_name)
 
 
+def print_books_owned_list(user_id):
+    books_owned_list = go.get_books_owned_list(user_id)
+    for book_title in sorted(books_owned_list):
+        print(book_title)
+
+
 if __name__ == '__main__':
     args = get_arguments()
 
@@ -99,3 +107,6 @@ if __name__ == '__main__':
 
     if args.friends:
         print_friends_list(my_user_id)
+
+    if args.books:
+        print_books_owned_list(my_user_id)

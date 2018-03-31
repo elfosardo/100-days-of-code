@@ -154,14 +154,29 @@ def get_followers_list(user_id):
     return followers_list
 
 
+def get_books_owned_list(user_id):
+    books_owned_list = []
+    books_owned_list_url = cfg.books_owned_url.replace('USER_ID', user_id)
+    xml_content = get_xml_content(request_url=books_owned_list_url,
+                                  request_type='GET')
+    content = xml.dom.minidom.parseString(xml_content)
+    dom_list = content.getElementsByTagName('owned_book')
+    for element in dom_list:
+        book_elem_xml = element.getElementsByTagName('book')[0]
+        book_title_xml = book_elem_xml.getElementsByTagName('title')[0]
+        book_title = book_title_xml.firstChild.nodeValue
+        books_owned_list.append(book_title)
+    return books_owned_list
+
+
 def generate_info_list(list_url):
     info_list = []
     xml_content = get_xml_content(request_url=list_url,
                                   request_type='GET')
     content = xml.dom.minidom.parseString(xml_content)
     dom_list = content.getElementsByTagName('user')
-    for followers in dom_list[1:]:
-        followers_name_elem = followers.getElementsByTagName('name')[0]
-        followers_name = followers_name_elem.firstChild.nodeValue
-        info_list.append(followers_name)
+    for element in dom_list[1:]:
+        name_elem = element.getElementsByTagName('name')[0]
+        name = name_elem.firstChild.nodeValue
+        info_list.append(name)
     return info_list
