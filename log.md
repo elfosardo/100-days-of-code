@@ -563,3 +563,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Day 70: April 1, 2018
+
+**Today's Work**: some more refactoring
+
+**Arguments**: Python 3.5, goodreads apis, refactoring
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+

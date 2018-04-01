@@ -62,28 +62,25 @@ def print_shelves_info(user_id):
         print('{:<20} {:<15}'.format(shelf['name'], shelf['book_count']['#text']))
 
 
-def print_friends_list(user_id):
-    friends_list = go.get_friends_list(user_id)
-    for friend_name in sorted(friends_list):
-        print(friend_name)
+def check_list_to_order(user_id):
+    list_to_order = []
+    if args.shelves:
+        print_shelves_info(user_id)
+    if args.following:
+        list_to_order = go.get_following_list(user_id)
+    if args.followers:
+        list_to_order = go.get_followers_list(user_id)
+    if args.friends:
+        list_to_order = go.get_friends_list(user_id)
+    if args.books:
+        list_to_order = go.get_books_owned_list(user_id)
+    if len(list_to_order) > 0:
+        print_ordered_list(list_to_order)
 
 
-def print_followers_list(user_id):
-    followers_list = go.get_followers_list(user_id)
-    for follower_name in sorted(followers_list):
-        print(follower_name)
-
-
-def print_following_list(user_id):
-    following_list = go.get_following_list(user_id)
-    for following_name in sorted(following_list):
-        print(following_name)
-
-
-def print_books_owned_list(user_id):
-    books_owned_list = go.get_books_owned_list(user_id)
-    for book_title in sorted(books_owned_list):
-        print(book_title)
+def print_ordered_list(list_to_order):
+    for element in sorted(list_to_order):
+        print(element)
 
 
 if __name__ == '__main__':
@@ -96,17 +93,4 @@ if __name__ == '__main__':
     my_user_id = cfg.config['DEFAULT']['USER_ID']
     print('My user id: {}'.format(my_user_id))
 
-    if args.following:
-        print_following_list(my_user_id)
-
-    if args.followers:
-        print_followers_list(my_user_id)
-
-    if args.shelves:
-        print_shelves_info(my_user_id)
-
-    if args.friends:
-        print_friends_list(my_user_id)
-
-    if args.books:
-        print_books_owned_list(my_user_id)
+    check_list_to_order(my_user_id)
