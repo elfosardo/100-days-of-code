@@ -571,3 +571,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Day 71: April 2, 2018
+
+**Today's Work**: refactored elf_auto_tweet to make it work again properly
+
+**Arguments**: Python 3.5, twitter apis, refactoring
+
+**Link(s)**: [elf_auto_tweet](elf_auto_tweet)
+
