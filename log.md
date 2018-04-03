@@ -579,3 +579,11 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [elf_auto_tweet](elf_auto_tweet)
 
+### Day 72: April 3, 2018
+
+**Today's Work**: printing list of owned books with id and title as ordered dict using collections
+
+**Arguments**: Python 3.5, goodreads apis, collections, ordered dicts
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+

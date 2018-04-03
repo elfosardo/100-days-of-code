@@ -64,6 +64,7 @@ def print_shelves_info(user_id):
 
 def check_list_to_order(user_id):
     list_to_order = []
+    dict_to_order = {}
     if args.shelves:
         print_shelves_info(user_id)
     if args.following:
@@ -73,14 +74,21 @@ def check_list_to_order(user_id):
     if args.friends:
         list_to_order = go.get_friends_list(user_id)
     if args.books:
-        list_to_order = go.get_books_owned_list(user_id)
+        dict_to_order = go.get_books_owned(user_id)
     if len(list_to_order) > 0:
         print_ordered_list(list_to_order)
+    if dict_to_order:
+        print_ordered_dict(dict_to_order)
 
 
 def print_ordered_list(list_to_order):
     for element in sorted(list_to_order):
         print(element)
+
+
+def print_ordered_dict(dict_to_order):
+    for k, v in dict_to_order.items():
+        print('{:>9} {}'.format(k, v))
 
 
 if __name__ == '__main__':

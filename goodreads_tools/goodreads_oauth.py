@@ -1,4 +1,5 @@
 import oauth2
+import collections
 import config as cfg
 import getpass
 import time
@@ -154,10 +155,10 @@ def get_followers_list(user_id):
     return followers_list
 
 
-def get_books_owned_list(user_id):
-    books_owned_list = []
-    books_owned_list_url = cfg.books_owned_url.replace('USER_ID', user_id)
-    xml_content = get_xml_content(request_url=books_owned_list_url,
+def get_books_owned(user_id):
+    books_owned = collections.OrderedDict()
+    books_owned_url = cfg.books_owned_url.replace('USER_ID', user_id)
+    xml_content = get_xml_content(request_url=books_owned_url,
                                   request_type='GET')
     content = xml.dom.minidom.parseString(xml_content)
     dom_list = content.getElementsByTagName('owned_book')
@@ -165,8 +166,10 @@ def get_books_owned_list(user_id):
         book_elem_xml = element.getElementsByTagName('book')[0]
         book_title_xml = book_elem_xml.getElementsByTagName('title')[0]
         book_title = book_title_xml.firstChild.nodeValue
-        books_owned_list.append(book_title)
-    return books_owned_list
+        book_id_xml = book_elem_xml.getElementsByTagName('id')[0]
+        book_id = book_id_xml.firstChild.nodeValue
+        books_owned[book_id] = book_title
+    return books_owned
 
 
 def generate_info_list(list_url):
