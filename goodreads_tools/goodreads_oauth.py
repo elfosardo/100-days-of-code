@@ -1,5 +1,4 @@
 import oauth2
-import collections
 import config as cfg
 import getpass
 import time
@@ -8,6 +7,8 @@ import urllib.parse as up
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+
+from goodreads_book import GoodreadsBook
 
 
 def get_client():
@@ -23,8 +24,8 @@ def get_client():
 def get_content(client, request_url, req_type):
     response, content = client.request(request_url, req_type)
     if response['status'] != '200':
-        raise Exception('Invalid response: {} {}, content: '.format(response['status'],
-                                                                    content))
+        raise Exception('Invalid response: {} {}, content: '
+                        .format(response['status'], content))
     return content
 
 
@@ -57,13 +58,16 @@ def authorize_token(authorize_link, password):
     driver = webdriver.Firefox()
     driver.get(authorize_link)
     assert 'Sign in' in driver.title
-    clear_and_fill_element(driver=driver, element_id='user_email', value=cfg.user_email)
-    clear_and_fill_element(driver=driver, element_id='user_password', value=password)
+    clear_and_fill_element(driver=driver, element_id='user_email',
+                           value=cfg.user_email)
+    clear_and_fill_element(driver=driver, element_id='user_password',
+                           value=password)
     remember_me_elem = driver.find_element_by_id('remember_me')
     remember_me_elem.click()
     driver.find_element_by_name('next').click()
     try:
-        driver.find_element_by_xpath("//input[@name='commit' and @value='Allow access']").click()
+        driver.find_element_by_xpath("//input[@name='commit'"
+                                     "and @value='Allow access']").click()
     except NoSuchElementException:
         time.sleep(2)
     driver.close()
@@ -156,7 +160,7 @@ def get_followers_list(user_id):
 
 
 def get_books_owned(user_id):
-    books_owned = collections.OrderedDict()
+    books_owned = []
     books_owned_url = cfg.books_owned_url.replace('USER_ID', user_id)
     xml_content = get_xml_content(request_url=books_owned_url,
                                   request_type='GET')
@@ -168,7 +172,9 @@ def get_books_owned(user_id):
         book_title = book_title_xml.firstChild.nodeValue
         book_id_xml = book_elem_xml.getElementsByTagName('id')[0]
         book_id = book_id_xml.firstChild.nodeValue
-        books_owned[book_id] = book_title
+        book = GoodreadsBook(book_id=book_id,
+                             book_title=book_title)
+        books_owned.append(book)
     return books_owned
 
 

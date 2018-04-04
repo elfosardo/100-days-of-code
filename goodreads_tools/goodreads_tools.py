@@ -42,7 +42,8 @@ def check_user_id():
 
 def get_user_shelves_xml(user_id):
     url = cfg.shelves_list_url
-    user_shelves_xml = requests.get(url, {'key': cfg.api_key, 'user_id': user_id}).content
+    user_shelves_xml = requests.get(url, {'key': cfg.api_key,
+                                          'user_id': user_id}).content
     return user_shelves_xml
 
 
@@ -59,26 +60,25 @@ def print_shelves_info(user_id):
     shelves = get_user_shelves(user_id)
     print('{:<20} {:<15}'.format('Shelf name', 'Books in shelf'))
     for shelf in shelves:
-        print('{:<20} {:<15}'.format(shelf['name'], shelf['book_count']['#text']))
+        print('{:<20} {:<15}'.format(shelf['name'],
+                                     shelf['book_count']['#text']))
 
 
-def check_list_to_order(user_id):
+def execute_command(user_id):
     list_to_order = []
-    dict_to_order = {}
     if args.shelves:
         print_shelves_info(user_id)
-    if args.following:
+    elif args.following:
         list_to_order = go.get_following_list(user_id)
-    if args.followers:
+    elif args.followers:
         list_to_order = go.get_followers_list(user_id)
-    if args.friends:
+    elif args.friends:
         list_to_order = go.get_friends_list(user_id)
-    if args.books:
-        dict_to_order = go.get_books_owned(user_id)
+    elif args.books:
+        books_list = go.get_books_owned(user_id)
+        print_book_info(books_list)
     if len(list_to_order) > 0:
         print_ordered_list(list_to_order)
-    if dict_to_order:
-        print_ordered_dict(dict_to_order)
 
 
 def print_ordered_list(list_to_order):
@@ -86,9 +86,9 @@ def print_ordered_list(list_to_order):
         print(element)
 
 
-def print_ordered_dict(dict_to_order):
-    for k, v in dict_to_order.items():
-        print('{:>9} {}'.format(k, v))
+def print_book_info(books_list):
+    for book in books_list:
+        print('{:>9} {}'.format(book.id, book.title))
 
 
 if __name__ == '__main__':
@@ -101,4 +101,4 @@ if __name__ == '__main__':
     my_user_id = cfg.config['DEFAULT']['USER_ID']
     print('My user id: {}'.format(my_user_id))
 
-    check_list_to_order(my_user_id)
+    execute_command(my_user_id)
