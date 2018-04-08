@@ -595,3 +595,13 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Broken laptop: April 5-7
+
+### Day 74: April 8, 2018
+
+**Today's Work**: fixed laptop! Added syntax to get book authors to goodreads tools
+
+**Arguments**: Python 3.5, goodreads apis
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+

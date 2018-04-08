@@ -168,14 +168,31 @@ def get_books_owned(user_id):
     dom_list = content.getElementsByTagName('owned_book')
     for element in dom_list:
         book_elem_xml = element.getElementsByTagName('book')[0]
-        book_title_xml = book_elem_xml.getElementsByTagName('title')[0]
-        book_title = book_title_xml.firstChild.nodeValue
-        book_id_xml = book_elem_xml.getElementsByTagName('id')[0]
-        book_id = book_id_xml.firstChild.nodeValue
+        book_id = get_book_info(book_elem_xml, 'id')
+        book_title = get_book_info(book_elem_xml, 'title')
+        book_authors = get_book_authors(book_elem_xml)
         book = GoodreadsBook(book_id=book_id,
-                             book_title=book_title)
+                             book_title=book_title,
+                             book_authors=book_authors)
         books_owned.append(book)
     return books_owned
+
+
+def get_book_info(book_elem_xml, info):
+    book_info_xml = book_elem_xml.getElementsByTagName(info)[0]
+    book_info = book_info_xml.firstChild.nodeValue
+    return book_info
+
+
+def get_book_authors(book_elem_xml):
+    book_authors = []
+    authors_section = book_elem_xml.getElementsByTagName('authors')
+    for author in authors_section:
+        author_elem_xml = author.getElementsByTagName('author')[0]
+        author_name = get_book_info(book_elem_xml=author_elem_xml,
+                                    info='name')
+        book_authors.append(author_name)
+    return book_authors
 
 
 def generate_info_list(list_url):
