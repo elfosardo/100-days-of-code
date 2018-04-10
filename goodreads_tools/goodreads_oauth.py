@@ -141,22 +141,38 @@ def get_xml_content(request_url, request_type):
     return xml_content
 
 
+def generate_info_list(func):
+    def function_wrapper(user_id):
+        info_list = []
+        list_url = func(user_id)
+        xml_content = get_xml_content(request_url=list_url,
+                                      request_type='GET')
+        content = xml.dom.minidom.parseString(xml_content)
+        dom_list = content.getElementsByTagName('user')
+        for element in dom_list[1:]:
+            name_elem = element.getElementsByTagName('name')[0]
+            name = name_elem.firstChild.nodeValue
+            info_list.append(name)
+        return info_list
+    return function_wrapper
+
+
+@generate_info_list
 def get_friends_list(user_id):
     friends_list_url = '{}/{}?format=xml'.format(cfg.friend_list_url, user_id)
-    friends_list = generate_info_list(friends_list_url)
-    return friends_list
+    return friends_list_url
 
 
+@generate_info_list
 def get_following_list(user_id):
     following_list_url = cfg.following_list_url.replace('USER_ID', user_id)
-    following_list = generate_info_list(following_list_url)
-    return following_list
+    return following_list_url
 
 
+@generate_info_list
 def get_followers_list(user_id):
     followers_list_url = cfg.followers_list_url.replace('USER_ID', user_id)
-    followers_list = generate_info_list(followers_list_url)
-    return followers_list
+    return followers_list_url
 
 
 def get_books_owned(user_id):
@@ -193,16 +209,3 @@ def get_book_authors(book_elem_xml):
                                     info='name')
         book_authors.append(author_name)
     return book_authors
-
-
-def generate_info_list(list_url):
-    info_list = []
-    xml_content = get_xml_content(request_url=list_url,
-                                  request_type='GET')
-    content = xml.dom.minidom.parseString(xml_content)
-    dom_list = content.getElementsByTagName('user')
-    for element in dom_list[1:]:
-        name_elem = element.getElementsByTagName('name')[0]
-        name = name_elem.firstChild.nodeValue
-        info_list.append(name)
-    return info_list
