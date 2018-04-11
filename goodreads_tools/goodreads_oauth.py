@@ -89,37 +89,26 @@ def update_config_file(section, new_values):
 def get_token_values():
     consumer = oauth2.Consumer(key=cfg.api_key,
                                secret=cfg.api_secret)
-
     client = oauth2.Client(consumer)
-
     content = get_content(client=client,
                           request_url=cfg.request_token_url,
                           req_type='GET')
-
     request_token = dict(up.parse_qsl(content.decode('utf-8')))
-
     authorize_link = '{}?oauth_token={}'.format(cfg.authorize_url,
                                                 request_token['oauth_token'])
-
     print('Authorizing token using Selenium driver')
     my_password = getpass.getpass('Goodreads Password: ')
-
     authorize_token(authorize_link=authorize_link,
                     password=my_password)
-
     token = oauth2.Token(request_token['oauth_token'],
                          request_token['oauth_token_secret'])
-
     client = oauth2.Client(consumer, token)
-
     content = get_content(client=client,
                           request_url=cfg.access_token_url,
                           req_type='POST')
-
     access_token = dict(up.parse_qsl(content.decode('utf-8')))
     token_key = access_token['oauth_token']
     token_secret = access_token['oauth_token_secret']
-
     return token_key, token_secret
 
 
