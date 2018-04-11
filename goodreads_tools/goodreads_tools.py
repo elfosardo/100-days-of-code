@@ -88,7 +88,8 @@ def print_ordered_list(list_to_order):
 
 def print_book_info(books_list):
     for book in books_list:
-        print('{:>9} {} | Authors: {}'.format(book.id, book.title, *book.authors, sep=', '))
+        print('{:>9} {} | Authors: {}'.format(book.id, book.title,
+                                              *book.authors, sep=', '))
 
 
 if __name__ == '__main__':
