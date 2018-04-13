@@ -4,6 +4,7 @@ class GoodreadsBook:
         self.book_elem_xml = book_elem_xml
         self.id = ''
         self.title = ''
+        self.owned_id = ''
         self.authors = []
 
     def get_book_id(self):
@@ -28,3 +29,4 @@ class GoodreadsBook:
             author_name = author_name_xml.firstChild.nodeValue
             book_authors.append(author_name)
         return book_authors
+
