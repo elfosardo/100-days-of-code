@@ -58,10 +58,12 @@ def authorize_token(authorize_link, password):
     driver = webdriver.Firefox()
     driver.get(authorize_link)
     assert 'Sign in' in driver.title
-    clear_and_fill_element(driver=driver, element_id='user_email',
-                           value=cfg.user_email)
-    clear_and_fill_element(driver=driver, element_id='user_password',
-                           value=password)
+    clear_and_fill_element(driver=driver,
+                           element_id='user_email',
+                           value = cfg.user_email)
+    clear_and_fill_element(driver=driver,
+                           element_id='user_password',
+                           value = password)
     remember_me_elem = driver.find_element_by_id('remember_me')
     remember_me_elem.click()
     driver.find_element_by_name('next').click()
@@ -175,6 +177,8 @@ def get_books_owned(user_id):
         book_elem_xml = element.getElementsByTagName('book')[0]
         book = create_book(book_elem_xml)
         books_owned.append(book)
+        owned_id_tag = element.getElementsByTagName('id')[0]
+        book.owned_id = owned_id_tag.firstChild.nodeValue
     return books_owned
 
 
@@ -184,3 +188,12 @@ def create_book(book_elem_xml):
     book.title = book.get_book_title()
     book.authors = book.get_book_authors()
     return book
+
+
+def show_owned_book(owned_book_id):
+    book_owned_url = cfg.show_owned_book_url.replace('OWNED_BOOK_ID',
+                                                     owned_book_id)
+    xml_content = get_xml_content(request_url=book_owned_url,
+                                  request_type='GET')
+    content = xml.dom.minidom.parseString(xml_content)
+    print(content.toprettyxml())

@@ -12,6 +12,8 @@ shelves_list_url = '{}/shelf/list.xml'.format(API_URL)
 followers_list_url = '{}/user/USER_ID/followers.xml'.format(API_URL)
 following_list_url = '{}/user/USER_ID/following.xml'.format(API_URL)
 books_owned_url = '{}/owned_books/user?format=xml&id=USER_ID'.format(API_URL)
+show_owned_book_url = '{}/owned_books/show/OWNED_BOOK_ID?format=xml'\
+    .format(API_URL)
 
 config = configparser.ConfigParser()
 config.read('config.ini')
