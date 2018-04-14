@@ -621,3 +621,21 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Skip Day: April 11, 2018
+
+### Day 77: April 12, 2018
+
+**Today's Work**: adding option to show info on owned book using owned book id plus some refactoring
+
+**Arguments**: Python 3.5, goodreads apis
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+
+### Day 78: April 13, 2018
+
+**Today's Work**: pretty printing output of owned book
+
+**Arguments**: Python 3.5, goodreads apis
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+

@@ -168,7 +168,8 @@ def get_followers_list(user_id):
 
 def get_books_owned(user_id):
     books_owned = []
-    books_owned_url = cfg.books_owned_url.replace('USER_ID', user_id)
+    books_owned_url = cfg.books_owned_url.replace('USER_ID',
+                                                  user_id)
     xml_content = get_xml_content(request_url=books_owned_url,
                                   request_type='GET')
     content = xml.dom.minidom.parseString(xml_content)
@@ -196,4 +197,7 @@ def show_owned_book(owned_book_id):
     xml_content = get_xml_content(request_url=book_owned_url,
                                   request_type='GET')
     content = xml.dom.minidom.parseString(xml_content)
-    print(content.toprettyxml())
+    dom_list = content.getElementsByTagName('owned_book')[0]
+    book_elem_xml = dom_list.getElementsByTagName('book')[0]
+    owned_book = create_book(book_elem_xml)
+    return owned_book
