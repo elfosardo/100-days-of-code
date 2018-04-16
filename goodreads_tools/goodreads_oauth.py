@@ -35,7 +35,8 @@ def get_user_id():
                           request_url=cfg.auth_user_url,
                           req_type='GET')
     userxml = xml.dom.minidom.parseString(content)
-    user_id = userxml.getElementsByTagName('user')[0].attributes['id'].value
+    user_elem = userxml.getElementsByTagName('user')[0]
+    user_id = user_elem.attributes['id'].value
     return str(user_id)
 
 
@@ -177,9 +178,9 @@ def get_books_owned(user_id):
     for element in dom_list:
         book_elem_xml = element.getElementsByTagName('book')[0]
         book = create_book(book_elem_xml)
-        books_owned.append(book)
         owned_id_tag = element.getElementsByTagName('id')[0]
         book.owned_id = owned_id_tag.firstChild.nodeValue
+        books_owned.append(book)
     return books_owned
 
 
@@ -191,7 +192,7 @@ def create_book(book_elem_xml):
     return book
 
 
-def show_owned_book(owned_book_id):
+def get_owned_book(owned_book_id):
     book_owned_url = cfg.show_owned_book_url.replace('OWNED_BOOK_ID',
                                                      owned_book_id)
     xml_content = get_xml_content(request_url=book_owned_url,

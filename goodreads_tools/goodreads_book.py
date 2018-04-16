@@ -29,4 +29,3 @@ class GoodreadsBook:
             author_name = author_name_xml.firstChild.nodeValue
             book_authors.append(author_name)
         return book_authors
-

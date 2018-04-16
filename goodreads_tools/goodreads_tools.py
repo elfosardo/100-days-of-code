@@ -81,10 +81,8 @@ def execute_command(user_id):
         print_book_info(books_list)
     elif args.show_owned_book:
         owned_book_id = input('Owned Book ID: ')
-        owned_book = go.show_owned_book(owned_book_id)
-        print('Book ID: {}'.format(owned_book.id))
-        print('Book Title: {}'.format(owned_book.title))
-        print('Book Authors: {}'.format(*owned_book.authors, sep=', '))
+        owned_book = go.get_owned_book(owned_book_id)
+        print_owned_book(owned_book)
     if len(list_to_order) > 0:
         print_ordered_list(list_to_order)
 
@@ -92,6 +90,12 @@ def execute_command(user_id):
 def print_ordered_list(list_to_order):
     for element in sorted(list_to_order):
         print(element)
+
+
+def print_owned_book(owned_book):
+    print('Book ID: {}'.format(owned_book.id))
+    print('Book Title: {}'.format(owned_book.title))
+    print('Book Authors: {}'.format(*owned_book.authors, sep=', '))
 
 
 def print_book_info(books_list):
