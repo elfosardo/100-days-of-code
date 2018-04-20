@@ -2,6 +2,7 @@ import unittest
 import unittest.mock as mock
 import configparser
 from goodreads_tools import *
+from goodreads_oauth import *
 
 
 class TestGoodreads(unittest.TestCase):
@@ -45,6 +46,11 @@ class TestGoodreads(unittest.TestCase):
         mock_get.return_value = mock_resp
         result = get_user_shelves_xml(self.test_user_id)
         self.assertEqual(result, 'XML_CONTENT')
+
+    def test_get_client(self):
+        client = get_client()
+        self.assertIsNotNone(client)
+        self.assertIsInstance(client, oauth2.Client)
 
 
 if __name__ == '__main__':
