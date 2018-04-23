@@ -15,8 +15,9 @@ books_owned_url = '{}/owned_books/user?format=xml&id=USER_ID'.format(API_URL)
 show_owned_book_url = '{}/owned_books/show/OWNED_BOOK_ID?format=xml'\
     .format(API_URL)
 
+CONFIG_FILE = 'config.ini'
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(CONFIG_FILE)
 
 api_key = config['DEFAULT']['GOODREADS_API_KEY']
 api_secret = config['DEFAULT']['GOODREADS_API_SECRET']

@@ -29,15 +29,26 @@ def get_content(client, request_url, req_type):
     return content
 
 
-def get_user_id():
+def get_user_xml():
     client = get_client()
     content = get_content(client=client,
                           request_url=cfg.auth_user_url,
                           req_type='GET')
-    userxml = xml.dom.minidom.parseString(content)
-    user_elem = userxml.getElementsByTagName('user')[0]
-    user_id = user_elem.attributes['id'].value
-    return str(user_id)
+    user_xml = xml.dom.minidom.parseString(content)
+    return user_xml
+
+
+def get_user_elem():
+    user_xml = get_user_xml()
+    user_elem = user_xml.getElementsByTagName('user')[0]
+    return user_elem
+
+
+def get_user_id():
+    user_elem = get_user_elem()
+    user_id_value = user_elem.attributes['id'].value
+    user_id = str(user_id_value)
+    return user_id
 
 
 def save_user_id():
@@ -61,10 +72,10 @@ def authorize_token(authorize_link, password):
     assert 'Sign in' in driver.title
     clear_and_fill_element(driver=driver,
                            element_id='user_email',
-                           value = cfg.user_email)
+                           value=cfg.user_email)
     clear_and_fill_element(driver=driver,
                            element_id='user_password',
-                           value = password)
+                           value=password)
     remember_me_elem = driver.find_element_by_id('remember_me')
     remember_me_elem.click()
     driver.find_element_by_name('next').click()
@@ -77,16 +88,16 @@ def authorize_token(authorize_link, password):
     return 'token authorized'
 
 
-def update_config_file(section, new_values):
+def update_config_file(section, new_values, config_file=cfg.CONFIG_FILE):
     for k, v in new_values.items():
         cfg.config[section][k] = v
     try:
-        with open('config.ini', 'w') as config_file:
+        with open(config_file, 'w') as config_file:
             cfg.config.write(config_file)
     except IOError:
         print('cannot open file {}'.format(config_file))
     config_file.close()
-    return 'config file updated'
+    return True
 
 
 def get_token_values():

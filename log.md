@@ -675,3 +675,22 @@ created script to add bullets to lines in clipboard or capitalize first letter o
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Skip Days: April 20-21, 2018
+
+## Day 83: April 22, 2018
+
+**Today's Work**: moved configuration file name to constant CONFIG_FILE;
+split get_user_id in 3 functions; added config_file parameter to update_config_file function
+
+**Arguments**: Python 3.5, goodreads apis
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+
+## Day 84: April 23, 2018
+
+**Today's Work**: added test for update_config_file using mock_open to fake builtin open function
+
+**Arguments**: Python 3.5, goodreads apis, unittest, mock
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+
