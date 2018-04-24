@@ -56,14 +56,14 @@ def save_user_id():
     new_config_values = {'USER_ID': user_id}
     update_config_file(section='DEFAULT',
                        new_values=new_config_values)
-    return 'user_id saved in configuration file'
+    return True
 
 
 def clear_and_fill_element(driver, element_id, value):
     element = driver.find_element_by_id(element_id)
     element.clear()
     element.send_keys(value)
-    return 'element filled'
+    return True
 
 
 def authorize_token(authorize_link, password):
@@ -85,7 +85,7 @@ def authorize_token(authorize_link, password):
     except NoSuchElementException:
         time.sleep(2)
     driver.close()
-    return 'token authorized'
+    return True
 
 
 def update_config_file(section, new_values, config_file=cfg.CONFIG_FILE):
@@ -133,7 +133,7 @@ def save_token_values():
                          'TOKEN_SECRET': token_secret}
     update_config_file(section='SECRETS',
                        new_values=new_config_values)
-    return 'OAuth token codes saved in configuration file'
+    return True
 
 
 def get_xml_content(request_url, request_type):
