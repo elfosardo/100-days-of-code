@@ -199,7 +199,6 @@ def create_book(book_elem_xml):
     book = GoodreadsBook(book_elem_xml)
     book.id = book.get_book_id()
     book.title = book.get_book_title()
-    book.authors = book.get_book_authors()
     return book
 
 
