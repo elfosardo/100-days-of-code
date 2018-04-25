@@ -188,18 +188,11 @@ def get_books_owned(user_id):
     dom_list = content.getElementsByTagName('owned_book')
     for element in dom_list:
         book_elem_xml = element.getElementsByTagName('book')[0]
-        book = create_book(book_elem_xml)
+        book = GoodreadsBook(book_elem_xml)
         owned_id_tag = element.getElementsByTagName('id')[0]
         book.owned_id = owned_id_tag.firstChild.nodeValue
         books_owned.append(book)
     return books_owned
-
-
-def create_book(book_elem_xml):
-    book = GoodreadsBook(book_elem_xml)
-    book.id = book.get_book_id()
-    book.title = book.get_book_title()
-    return book
 
 
 def get_owned_book(owned_book_id):
@@ -210,5 +203,5 @@ def get_owned_book(owned_book_id):
     content = xml.dom.minidom.parseString(xml_content)
     dom_list = content.getElementsByTagName('owned_book')[0]
     book_elem_xml = dom_list.getElementsByTagName('book')[0]
-    owned_book = create_book(book_elem_xml)
+    owned_book = GoodreadsBook(book_elem_xml)
     return owned_book

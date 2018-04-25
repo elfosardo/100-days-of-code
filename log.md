@@ -702,3 +702,11 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+## Day 86: April 25, 2018
+
+**Today's Work**: refactoring more book attributes with @property
+
+**Arguments**: Python 3.5, goodreads apis, @property
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+
