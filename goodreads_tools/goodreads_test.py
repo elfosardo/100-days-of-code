@@ -3,6 +3,9 @@ import unittest.mock as mock
 import configparser
 import config
 import oauth2
+import requests
+import xml
+
 import goodreads_tools as gt
 import goodreads_oauth as go
 
@@ -16,6 +19,11 @@ class TestGoodreads(unittest.TestCase):
         self.config.read('config.ini')
         test_user_id = self.config['TEST']['user_id']
         return test_user_id
+
+    @staticmethod
+    def test_connect_to_site():
+        site = config.API_URL
+        requests.get(site)
 
     def test_get_user_shelves(self):
         user_shelves = gt.get_user_shelves(self.test_user_id)
@@ -53,6 +61,11 @@ class TestGoodreads(unittest.TestCase):
         client = go.get_client()
         self.assertIsNotNone(client)
         self.assertIsInstance(client, oauth2.Client)
+
+    def test_get_user_xml(self):
+        result = go.get_user_xml()
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, xml.dom.minidom.Document)
 
     @mock.patch('builtins.open', create=True)
     @mock.patch('config.CONFIG_FILE', 'test_config.ini')

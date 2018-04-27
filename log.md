@@ -710,3 +710,13 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+### Skip Day: April 26, 2018
+
+## Day 87: April 27, 2018
+
+**Today's Work**: adding some more tests plus small refactoring
+
+**Arguments**: Python 3.5, goodreads apis, tests
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+

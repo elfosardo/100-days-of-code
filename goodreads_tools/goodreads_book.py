@@ -1,12 +1,12 @@
 
 class GoodreadsBook:
     def __init__(self, book_elem_xml, book_id='', book_title='',
-                 book_owned_id='', book_authors=None):
+                 book_authors=None, book_owned_id=''):
         self._book_elem_xml = book_elem_xml
         self._id = book_id
         self._title = book_title
-        self.owned_id = book_owned_id
         self._authors = book_authors
+        self.owned_id = book_owned_id
 
     @property
     def book_elem_xml(self):
