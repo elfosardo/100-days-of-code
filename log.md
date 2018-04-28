@@ -720,3 +720,11 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+## Day 88: April 28, 2018
+
+**Today's Work**: filtering warning messages on goodreads_tools unittests and adding more tests, moving to Python 3.6 \o/
+
+**Arguments**: Python 3.6, goodreads apis, warnings
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+

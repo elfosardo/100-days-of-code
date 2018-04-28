@@ -5,6 +5,7 @@ import config
 import oauth2
 import requests
 import xml
+import warnings
 
 import goodreads_tools as gt
 import goodreads_oauth as go
@@ -12,6 +13,9 @@ import goodreads_oauth as go
 
 class TestGoodreads(unittest.TestCase):
     def setUp(self):
+        warnings.filterwarnings("ignore",
+                                category=ResourceWarning,
+                                message="unclosed.*(<ssl\.SSLSocket.*>|<socket\.socket.*>)")
         self.config = configparser.ConfigParser()
         self.test_user_id = self.get_test_user_id()
 
@@ -61,6 +65,14 @@ class TestGoodreads(unittest.TestCase):
         client = go.get_client()
         self.assertIsNotNone(client)
         self.assertIsInstance(client, oauth2.Client)
+
+    def test_get_content(self):
+        client = go.get_client()
+        content = go.get_content(client,
+                                 request_url='http://google.com',
+                                 req_type='GET')
+        self.assertIsNotNone(content)
+        self.assertIsInstance(content, bytes)
 
     def test_get_user_xml(self):
         result = go.get_user_xml()
