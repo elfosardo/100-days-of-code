@@ -4,9 +4,9 @@ from datetime import datetime
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='Calculate number of days between two dates')
-    parser.add_argument('--starting_date', '-s', metavar='starting date', dest='sd',
+    parser.add_argument('starting_date',
                         help='Starting date; should be in the format "dd/mm/year"')
-    parser.add_argument('--end-date', '-e', metavar='ending date', dest='ed',
+    parser.add_argument('end_date',
                         help='Ending date; should be in the format "dd/mm/year"')
     args = parser.parse_args()
     return args
@@ -26,7 +26,7 @@ def get_days_between_dates(sd, ed):
 
 if __name__ == '__main__':
     my_args = get_arguments()
-    my_days_between_dates = get_days_between_dates(my_args.sd, my_args.ed)
+    my_days_between_dates = get_days_between_dates(my_args.starting_date,
+                                                   my_args.end_date)
 
-    print(my_days_between_dates)
-
+    print('days between dates: {}'.format(my_days_between_dates))
