@@ -728,3 +728,11 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+## Day 89: April 29, 2018
+
+**Today's Work**: playing a little bit with dictionaries plus some refactoring on different projects
+
+**Arguments**: Python 3.6, dictionaries
+
+**Link(s)**: [print_dictionary](print_dictionary)
+
