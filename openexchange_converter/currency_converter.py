@@ -4,9 +4,12 @@ import config as cfg
 
 
 def get_arguments():
-    parser = argparse.ArgumentParser('Currency converter based on openexchange rates')
+    parser = argparse.ArgumentParser('Currency converter based on'
+                                     'openexchange rates')
     mx_group = parser.add_mutually_exclusive_group()
-    mx_group.add_argument('-c', '--get-currencies-list', dest='get_curr_list', action='store_true',
+    mx_group.add_argument('-c', '--get-currencies-list',
+                          dest='get_curr_list',
+                          action='store_true',
                           help='display available currencies list and exit')
     sub_group = mx_group.add_argument_group()
     sub_group.add_argument('-a', '--amount', dest='from_curr_amount',
@@ -20,7 +23,9 @@ def get_arguments():
 
 
 def collect_data(data_type):
-    api_url = '{}/{}.json?app_id={}'.format(cfg.API_URL, data_type, cfg.api_key)
+    api_url = '{}/{}.json?app_id={}'.format(cfg.API_URL,
+                                            data_type,
+                                            cfg.api_key)
     json_data = requests.get(api_url).json()
     return json_data
 
@@ -75,7 +80,8 @@ if __name__ == '__main__':
     my_from_curr_rate = get_currency_rate(args.from_curr)
     my_to_curr_rate = get_currency_rate(args.to_curr)
 
-    to_curr_final_value = convert_currencies(from_curr_amount=args.from_curr_amount,
+    to_curr_final_value = convert_currencies(from_curr_amount=
+                                             args.from_curr_amount,
                                              to_curr_rate=my_to_curr_rate,
                                              from_curr_rate=my_from_curr_rate)
 
