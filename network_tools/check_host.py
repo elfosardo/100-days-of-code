@@ -3,7 +3,8 @@ from host import Host
 
 
 def generate_arguments():
-    parser = argparse.ArgumentParser(description='Collect information about a host')
+    parser = argparse.ArgumentParser(description='Collect information'
+                                                 'about a host')
     parser.add_argument('host', metavar='H', help='host to check')
     parser.add_argument('--ping', '-p', dest='ping', action='store_true',
                         help='ping the host')

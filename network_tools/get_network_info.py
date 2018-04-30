@@ -3,9 +3,11 @@ import ipaddress
 
 
 def generate_arguments():
-    parser = argparse.ArgumentParser(description='Give information about a network')
+    parser = argparse.ArgumentParser(description='Give information about'
+                                                 'a network')
     parser.add_argument('network',
-                        help='specify a network with the format x.x.x.x/x for ipv4 or x:x:x:x:x:x/x for ipv6')
+                        help='specify a network with the format x.x.x.x/x for'
+                             'ipv4 or x:x:x:x:x:x/x for ipv6')
     arguments = parser.parse_args()
     return arguments
 

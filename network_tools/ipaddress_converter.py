@@ -18,7 +18,6 @@ def convert_to_binary(int_ip_address):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='IP conversion tool')
     parser.add_argument('ip_address', help='IPv4 address to convert')
-
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-b', action='store_true', dest='binary',
                        help='Convert to binary')

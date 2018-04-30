@@ -37,7 +37,8 @@ class Host:
     def execute_remote_command(self, remote_command):
         if self.__ssh_connection is None:
             self.connect_to_host()
-        ssh_stdin, ssh_stdout, ssh_stderr = self.__ssh_connection.exec_command(remote_command)
+        ssh_stdin, ssh_stdout, ssh_stderr =\
+            self.__ssh_connection.exec_command(remote_command)
         command_output = ssh_stdout.readlines()
         return command_output
 
