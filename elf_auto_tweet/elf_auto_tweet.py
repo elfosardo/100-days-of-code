@@ -14,11 +14,13 @@ def send_tweet(tweet):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Tweet from command line')
     parser.add_argument('mytweet', metavar='Tweet', type=str,
-                        help='one phrase to tweet them all, enclosed in quotation marks!')
+                        help='one phrase to tweet them all, enclosed in'
+                             'quotation marks!')
     parser.add_argument('-c', '--challenge', action='store_true',
                         help='send the 100DaysOfCoding challenge tweet')
     parser.add_argument('-am', '--after-midnight', action='store_true',
-                        help='remove 1 day from code challenge if posting after midnight')
+                        help='remove 1 day from code challenge if posting'
+                             'after midnight')
     parser.add_argument('-t', '--test', action='store_true',
                         help='print the tweet instead of sending it')
     args = parser.parse_args()

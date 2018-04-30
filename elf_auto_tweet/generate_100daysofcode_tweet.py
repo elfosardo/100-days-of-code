@@ -22,11 +22,16 @@ def calc_days_passed(after_midnight):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='100DaysOfCode Tweet generator')
+    parser = argparse.ArgumentParser(description='100DaysOfCode'
+                                                 'Tweet generator')
     parser.add_argument('mytweet', metavar='Tweet', type=str,
-                        help='one phrase to tweet them all, enclosed in quotation marks!')
-    parser.add_argument('-am', '--after-midnight', dest='am', action='store_true',
-                        help="select this to remove 1 day if you're up after midnight")
+                        help='one phrase to tweet them all, enclosed'
+                             'in quotation marks!')
+    parser.add_argument('-am', '--after-midnight',
+                        dest='am',
+                        action='store_true',
+                        help="select this to remove 1 day if you're up"
+                             "after midnight")
     args = parser.parse_args()
     mytweet = generate_challenge_tweet(args.mytweet, args.am)
     print(mytweet)
