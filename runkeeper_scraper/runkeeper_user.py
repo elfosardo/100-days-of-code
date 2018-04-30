@@ -48,13 +48,15 @@ class RunkeeperUser:
         except rke.ConnectionFailed(url=home_url):
             raise
         soup = BfS(real_home.text, 'html.parser')
-        profile_href = soup.find('a', {'href': re.compile(config.PROFILE_REGEX)})
+        profile_href = soup.find('a',
+                                 {'href': re.compile(config.PROFILE_REGEX)})
         profile_path = profile_href.attrs['href']
         profile_name = profile_path.split('/')[2]
         return profile_name
 
     def get_profile_info(self, info):
-        request_url = '{}/user/{}/profile'.format(config.SITE_URL, self.profile_name)
+        request_url = '{}/user/{}/profile'.format(config.SITE_URL,
+                                                  self.profile_name)
         try:
             request = self.session.get(request_url)
         except rke.ConnectionFailed(url=request_url):

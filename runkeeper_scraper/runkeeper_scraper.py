@@ -17,7 +17,8 @@ def download_activites_by_month_year(date):
         total_activites_list.append(new_activity)
         converted_activity_datetime = new_activity.get_converted_datetime()
         print('Saving activity: {}'.format(converted_activity_datetime))
-        gpx_saved_activity = open('runkeeper_{}.gpx'.format(converted_activity_datetime), 'w')
+        gpx_saved_activity =\
+            open('runkeeper_{}.gpx'.format(converted_activity_datetime), 'w')
         gpx_saved_activity.write(new_activity.download_activity_as_gpx())
     total_activites = len(total_activites_list)
     print('Total downloaded activities {}'.format(total_activites))
@@ -28,7 +29,8 @@ if __name__ == '__main__':
     parser.add_argument('email', metavar='email',
                         help='the username is your e-mail address')
     parser.add_argument('--save_activities_as_gpx', '-x', type=str, dest="date",
-                        help='download all activities in "Month/Year" as gpx files, ex: "Jan/2016"')
+                        help='download all activities in "Month/Year" as gpx'
+                             'files, ex: "Jan/2016"')
     args = parser.parse_args()
 
     my_password = getpass.getpass()
