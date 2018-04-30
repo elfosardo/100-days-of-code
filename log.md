@@ -736,3 +736,11 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [print_dictionary](print_dictionary)
 
+## Day 90: April 30, 2018
+
+**Today's Work**: more refactoring on some projects before vacation
+
+**Arguments**: Python 3.6, refactoring
+
+**Link(s)**: [print_dictionary](print_dictionary)
+
