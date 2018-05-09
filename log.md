@@ -744,3 +744,13 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [print_dictionary](print_dictionary)
 
+### Vacation Days: May 1 - May 8, 2018
+
+## Day 91: May 9, 2018
+
+**Today's Work**: back at work! added some testing and bumped version of selenium on goodreads_tools
+
+**Arguments**: Python 3.6, unittest
+
+**Link(s)**: [goodreads_tools](goodreads_tools)
+

@@ -59,6 +59,7 @@ class TestGoodreads(unittest.TestCase):
         mock_resp = self._mock_requests_response(content='XML_CONTENT')
         mock_get.return_value = mock_resp
         result = gt.get_user_shelves_xml(self.test_user_id)
+        self.assertIsNotNone(result)
         self.assertEqual(result, 'XML_CONTENT')
 
     def test_get_client(self):
@@ -78,6 +79,16 @@ class TestGoodreads(unittest.TestCase):
         result = go.get_user_xml()
         self.assertIsNotNone(result)
         self.assertIsInstance(result, xml.dom.minidom.Document)
+
+    def test_get_user_elem(self):
+        result = go.get_user_elem()
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, xml.dom.minidom.Element)
+
+    def test_get_user_id(self):
+        result = go.get_user_id()
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, str)
 
     @mock.patch('builtins.open', create=True)
     @mock.patch('config.CONFIG_FILE', 'test_config.ini')
