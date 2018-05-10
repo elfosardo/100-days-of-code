@@ -2,3 +2,4 @@
 venv
 received_file.txt
 send_test.txt
+__pycache__

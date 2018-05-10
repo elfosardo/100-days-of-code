@@ -754,3 +754,11 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [goodreads_tools](goodreads_tools)
 
+## Day 92: May 10, 2018
+
+**Today's Work**: reviewing and refactoring the socker server
+
+**Arguments**: Python 3.6, socket, servers, file transfer
+
+**Link(s)**: [socket_server](socket_server)
+
