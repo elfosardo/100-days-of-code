@@ -762,3 +762,11 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [socket_server](socket_server)
 
+## Day 93: May 11, 2018
+
+**Today's Work**: playing with sqlite
+
+**Arguments**: Python 3.6, sqlite
+
+**Link(s)**: [simple_sqlite](simple_sqlite)
+
