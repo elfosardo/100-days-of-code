@@ -27,7 +27,7 @@ def db_connect(db_path=DB_PATH):
 
 def setup_db(con, cursor):
     users_sql = """
-        CREATE TABLE users (
+        CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY,
         name TEXT,
         email TEXT unique,
@@ -49,7 +49,6 @@ def add_user_data():
     user_data['name'] = input('Enter name of the new user: ')
     user_data['email'] = input('Enter email of the new user: ')
     user_data['password'] = getpass.getpass('Password of the new user: ')
-    print(user_data)
     return user_data
 
 
@@ -58,8 +57,6 @@ def insert_user_data(con, cursor, user_data):
         INSERT INTO users (name, email, password)
         VALUES (?, ?, ?)
     """
-    print(user_data)
-    print(user_data['name'])
     cursor.execute(insert_sql, (user_data['name'],
                                 user_data['email'],
                                 user_data['password']))
@@ -67,18 +64,26 @@ def insert_user_data(con, cursor, user_data):
     con.close()
 
 
-def get_user_data():
+def ask_user_name():
     username = input('Enter username of the user: ')
     return username
 
 
-def select_user_data(cursor, username):
+def get_user_data(cursor, username):
     select_sql = """
         SELECT name, email, password FROM users WHERE name=?
     """
     cursor.execute(select_sql, (username,))
     user_data = cursor.fetchall()
     return user_data
+
+
+def print_user_data(user_data):
+    formatted_data = [f'{username:<12}{email:<20}{password:>15}'
+                      for username, email, password in user_data]
+    username, email, password = 'Username', 'Email', 'Password'
+    print('\n'.join([f'{username:<12}{email:<20}{password:>15}'] +
+                    formatted_data))
 
 
 if __name__ == '__main__':
@@ -98,5 +103,6 @@ if __name__ == '__main__':
         insert_user_data(new_con, new_cursor, new_user_data)
 
     if args.get_user_data:
-        new_username = get_user_data()
-        print(select_user_data(new_cursor, new_username))
+        new_username = ask_user_name()
+        my_user_data = get_user_data(new_cursor, new_username)
+        print_user_data(my_user_data)
