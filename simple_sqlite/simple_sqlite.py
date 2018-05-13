@@ -74,9 +74,9 @@ def get_user_data():
 
 def select_user_data(cursor, username):
     select_sql = """
-        SELECT name, email, password FROM users
+        SELECT name, email, password FROM users WHERE name=?
     """
-    cursor.execute(select_sql)
+    cursor.execute(select_sql, (username,))
     user_data = cursor.fetchall()
     return user_data
 
