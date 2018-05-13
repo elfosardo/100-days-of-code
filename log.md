@@ -770,3 +770,11 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [simple_sqlite](simple_sqlite)
 
+## Day 94: May 12, 2018
+
+**Today's Work**: still playing with sqlite
+
+**Arguments**: Python 3.6, sqlite
+
+**Link(s)**: [simple_sqlite](simple_sqlite)
+
