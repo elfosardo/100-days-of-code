@@ -1,9 +1,7 @@
 import argparse
+import config
 import getpass
-import os
 import sqlite3
-
-DB_PATH = os.path.join(os.path.dirname(__file__), './users.sqlite')
 
 
 def get_arguments():
@@ -20,27 +18,21 @@ def get_arguments():
     return arguments
 
 
-def db_connect(db_path=DB_PATH):
+def db_connect(db_path=config.DB_PATH):
     con = sqlite3.connect(db_path)
     return con
 
 
 def setup_db(con, cursor):
-    users_sql = """
-        CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        email TEXT unique,
-        password TEXT)
-    """
-    cursor.execute(users_sql)
+    cursor.execute(config.create_users__table_sql)
     con.commit()
     con.close()
     return True
 
 
 def print_tables(cursor):
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+
+    cursor.execute(config.select_table_sql)
     print(cursor.fetchall())
 
 
@@ -53,13 +45,9 @@ def add_user_data():
 
 
 def insert_user_data(con, cursor, user_data):
-    insert_sql = """
-        INSERT INTO users (name, email, password)
-        VALUES (?, ?, ?)
-    """
-    cursor.execute(insert_sql, (user_data['name'],
-                                user_data['email'],
-                                user_data['password']))
+    cursor.execute(config.insert_into_users_sql, (user_data['name'],
+                                       user_data['email'],
+                                       user_data['password']))
     con.commit()
     con.close()
 
@@ -70,10 +58,7 @@ def ask_user_name():
 
 
 def get_user_data(cursor, username):
-    select_sql = """
-        SELECT name, email, password FROM users WHERE name=?
-    """
-    cursor.execute(select_sql, (username,))
+    cursor.execute(config.select_from_users_sql, (username,))
     user_data = cursor.fetchall()
     return user_data
 
