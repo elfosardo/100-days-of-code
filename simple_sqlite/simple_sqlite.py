@@ -1,13 +1,12 @@
 import argparse
 import config
 import getpass
+from pathlib import Path
 import sqlite3
 
 
 def get_arguments():
     parser = argparse.ArgumentParser('Simple users management with SQLite')
-    parser.add_argument('--setup', '-s', action='store_true',
-                        help='Initialize database')
     parser.add_argument('--print_tables', '-t', action='store_true',
                         help='Show all the tables in the database')
     parser.add_argument('--add_user_data', '-a', action='store_true',
@@ -23,6 +22,14 @@ def db_connect(db_path=config.DB_PATH):
     return con
 
 
+def init_db():
+    print('Initializing Database structure...')
+    con = db_connect()
+    cursor = con.cursor()
+    setup_db(con, cursor)
+    return True
+
+
 def setup_db(con, cursor):
     cursor.execute(config.create_users__table_sql)
     con.commit()
@@ -34,22 +41,26 @@ def print_tables(cursor):
 
     cursor.execute(config.select_table_sql)
     print(cursor.fetchall())
+    return True
 
 
 def add_user_data():
-    user_data = {}
-    user_data['name'] = input('Enter name of the new user: ')
-    user_data['email'] = input('Enter email of the new user: ')
-    user_data['password'] = getpass.getpass('Password of the new user: ')
+    username = input('Enter name of the new user: ')
+    email = input('Enter email of the new user: ')
+    password = getpass.getpass('Password of the new user: ')
+    user_data = {'name': username,
+                 'email': email,
+                 'password': password}
     return user_data
 
 
 def insert_user_data(con, cursor, user_data):
     cursor.execute(config.insert_into_users_sql, (user_data['name'],
-                                       user_data['email'],
-                                       user_data['password']))
+                                                  user_data['email'],
+                                                  user_data['password']))
     con.commit()
     con.close()
+    return True
 
 
 def ask_user_name():
@@ -69,16 +80,18 @@ def print_user_data(user_data):
     username, email, password = 'Username', 'Email', 'Password'
     print('\n'.join([f'{username:<12}{email:<20}{password:>15}'] +
                     formatted_data))
+    return True
 
 
 if __name__ == '__main__':
     args = get_arguments()
 
+    mydb_path = Path(config.DB_PATH)
+    if not mydb_path.exists():
+        init_db()
+
     new_con = db_connect()
     new_cursor = new_con.cursor()
-
-    if args.setup:
-        setup_db(new_con, new_cursor)
 
     if args.print_tables:
         print_tables(new_cursor)

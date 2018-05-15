@@ -1,6 +1,6 @@
-import os
 
-DB_PATH = os.path.join(os.path.dirname(__file__), './users.sqlite')
+
+DB_PATH = './users.sqlite'
 
 create_users__table_sql = """
     CREATE TABLE IF NOT EXISTS users (
