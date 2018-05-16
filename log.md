@@ -802,3 +802,11 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [simple_sqlite](simple_sqlite)
 
+## Day 98: May 16, 2018
+
+**Today's Work**: added functions to delete a single user and print all users
+
+**Arguments**: Python 3.6, sqlite
+
+**Link(s)**: [simple_sqlite](simple_sqlite)
+

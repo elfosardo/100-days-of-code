@@ -7,12 +7,16 @@ import sqlite3
 
 def get_arguments():
     parser = argparse.ArgumentParser('Simple users management with SQLite')
-    parser.add_argument('--print_tables', '-t', action='store_true',
-                        help='Show all the tables in the database')
     parser.add_argument('--add_user_data', '-a', action='store_true',
                         help='Add new user data')
+    parser.add_argument('--delete_user', '-d', action='store_true',
+                        help='Delete a user by name')
+    parser.add_argument('--print_tables', '-t', action='store_true',
+                        help='Show all the tables in the database')
     parser.add_argument('--get_user_data', '-u', action='store_true',
                         help='Get info from a user')
+    parser.add_argument('--get_all_users', '-U', action='store_true',
+                        help='Print all users ordered by name')
     arguments = parser.parse_args()
     return arguments
 
@@ -69,9 +73,15 @@ def ask_user_name():
 
 
 def get_user_data(cursor, username):
-    cursor.execute(config.select_from_users_sql, (username,))
+    cursor.execute(config.select_user_from_users_sql, (username,))
     user_data = cursor.fetchall()
     return user_data
+
+
+def get_all_users(cursor):
+    cursor.execute(config.select_all_from_users_sql)
+    all_users = cursor.fetchall()
+    return all_users
 
 
 def print_user_data(user_data):
@@ -80,6 +90,14 @@ def print_user_data(user_data):
     username, email, password = 'Username', 'Email', 'Password'
     print('\n'.join([f'{username:<12}{email:<20}{password:>15}'] +
                     formatted_data))
+    return True
+
+
+def delete_user_from_users(con, cursor, username):
+    cursor.execute(config.delete_user_from_users_sql, (username,))
+    con.commit()
+    con.close()
+    print('{} deleted'.format(username))
     return True
 
 
@@ -104,3 +122,11 @@ if __name__ == '__main__':
         new_username = ask_user_name()
         my_user_data = get_user_data(new_cursor, new_username)
         print_user_data(my_user_data)
+
+    if args.get_all_users:
+        all_users_data = get_all_users(new_cursor)
+        print_user_data(all_users_data)
+
+    if args.delete_user:
+        del_username = ask_user_name()
+        delete_user_from_users(new_con, new_cursor, del_username)
