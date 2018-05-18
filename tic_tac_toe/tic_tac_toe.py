@@ -68,7 +68,6 @@ def get_computer_move(board):
 
 
 def check_for_winner(board):
-    symbols = ['X', 'Y']
     victory_lines = [
         [board[0][0], board[0][1], board[0][2]],  # row1
         [board[1][0], board[1][1], board[1][2]],  # row2
@@ -81,9 +80,9 @@ def check_for_winner(board):
     ]
     for line in victory_lines:
         if ' ' not in line:
-            print(line)
             if line.count(line[0]) == len(line):
                 return line[0]
+            return 'tie'
     return False
 
 
