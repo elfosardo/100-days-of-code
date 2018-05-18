@@ -13,28 +13,31 @@ def make_board():
 
 def print_board(board):
     for line in board:
-        print('|'.join(line))
+        print(' | '.join(line))
     return None
 
 
 def get_player_move(board):
     space_taken = True
+    player_move = []
+    real_x = None
+    real_y = None
     while space_taken:
-        player_move = []
-        x = check_value('Column value (1-3): ')
-        y = check_value('Row value (1-3): ')
+        x = check_value('Row value (1-3): ')
+        y = check_value('Column value (1-3): ')
         real_x = x - 1
         real_y = y - 1
-        if board[real_x][real_y] is not ' ':
+        space_selected = board[real_x][real_y]
+        space_taken = check_space_taken(space_selected)
+        if space_taken:
             print('Space already taken, choose again!')
-        else:
-            space_taken = False
     player_move.extend([real_x, real_y])
     return player_move
 
 
 def check_value(message):
     incorrect_value = True
+    number = None
     while incorrect_value:
         str_number = input(message)
         number = int(str_number)
@@ -45,8 +48,22 @@ def check_value(message):
     return number
 
 
+def check_space_taken(space_selected):
+    if space_selected is not ' ':
+        return True
+    return False
+
+
 def get_computer_move(board):
-    computer_move = [2, 2]
+    space_taken = True
+    computer_move = []
+    while space_taken:
+        real_x = random.randint(0, 2)
+        real_y = random.randint(0, 2)
+        space_selected = board[real_x][real_y]
+        space_taken = check_space_taken(space_selected)
+        if not space_taken:
+            computer_move = [real_x, real_y]
     return computer_move
 
 
