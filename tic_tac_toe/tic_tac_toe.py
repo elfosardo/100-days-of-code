@@ -82,7 +82,10 @@ def check_for_winner(board):
         if ' ' not in line:
             if line.count(line[0]) == len(line):
                 return line[0]
-            return 'tie'
+    if ' ' not in board[0] and \
+        ' ' not in board[1] and \
+            ' ' not in board[2]:
+        return 'tie'
     return False
 
 
