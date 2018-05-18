@@ -810,11 +810,19 @@ split get_user_id in 3 functions; added config_file parameter to update_config_f
 
 **Link(s)**: [simple_sqlite](simple_sqlite)
 
-## Day 98: May 16, 2018
+## Day 99: May 17, 2018
 
 **Today's Work**: first part of python tic tac toe!
 
 **Arguments**: Python 3.6, random
+
+**Link(s)**: [tic_tac_toe](tic_tac_toe)
+
+## Day 100: May 18, 2018
+
+**Today's Work**: finished tic tac toe and the 100 days challenge with python!
+
+**Arguments**: Python 3.6
 
 **Link(s)**: [tic_tac_toe](tic_tac_toe)
 
