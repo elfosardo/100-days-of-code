@@ -93,7 +93,13 @@ if __name__ == '__main__':
 
     print('Welcome to Tic-Tac-Toe!')
 
-    player_team = input('Do you want to be X or O?\n').upper()
+    player_team = ''
+    choices = ['x', 'X', 'y', 'Y']
+    while player_team not in choices:
+        player_team = input('Do you want to be X or O?\n').upper()
+        print(player_team)
+        if player_team not in choices:
+            print('must choose X or Y')
 
     if player_team == 'X':
         computer_team = 'O'
